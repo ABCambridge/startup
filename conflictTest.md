@@ -1,0 +1,1 @@
+This is a test of resolving conflicts in my git hub
