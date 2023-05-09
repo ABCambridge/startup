@@ -11,3 +11,10 @@ FastChat is a web application that allows for instant messaging between profiles
 * Authentication: Users create an account and then use their account to login each time they access the web application.
 * Data Persistence: Login info, chats (recipients, titles), and messages persist accross each web app session by being stored in a cloud database.
 * Web Sockets: Used to render realtime reception and sending of messages while the user is using the application.
+
+## Features
+* Chats panel: side panel listing previously created chats that can be accessed and resumed.
+* Main messaging window: displays messages in the current conversation and allows new messages to be recieved and sent.
+* Login window: allows the user to login in order to access their messages or provides functionality to create a new account.
+* account creation page lets the user set their display name, login username, and login password.
+* Settings button: allows users to edit their display name and login credentials.
