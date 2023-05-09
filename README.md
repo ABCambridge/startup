@@ -16,7 +16,7 @@ FastChat is a web application that allows for instant messaging between profiles
 ## Technologies
 * HTML: Structure of the side panel, login window, and chat window will all be in HTML.
 * CSS: Styling of all the windows, including colors and animation of sending/receiving messages, and appearance of side panel will be accomplished using CSS.
-* JavaScript: Used to manage and manipulate the CSS, access and edit HTML elements, and display data received from Web Sockets. JavaScript will use
+* JavaScript: Used to manage and manipulate the CSS, access and edit HTML elements, and display data received from Web Sockets. JavaScript will also access third party services for the quote of the day.
 * Web Service Calls: Displays an inspirational quote on the login screen by calling a third party quote service.
 * Web Service Provision: Provides services with back and forth contact with the server and allowing the user to access the FastChat application Calls the server that provides data about what other running instances of the web application.
 * Authentication: Users create an account and then use their account to login each time they access the web application.
