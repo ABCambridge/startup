@@ -1,10 +1,10 @@
 [notes reference file](./notes.md)
 # Startup Assignment
 ## Elevator Pitch
-FastChat is a web application that allows for instant messaging between profiles, including group chats. It's free, updates messages instantly, and can be used from anywhere because it is based out of a browser. Users can get their accounts for free, customize their display name, and contact any other user on the platform using the provided search functions. Conversations persist between sessions and users can easily see their conversations on their side panel.
+FastChat is a web application that allows for instant messaging between profiles, including group chats. It's free, updates messages instantly, and can be used from anywhere because it is based out of a browser. Users can get their accounts for free, customize their display name, and contact any other user on the platform. Conversations persist between sessions and users can easily see their conversations on their side panel.
 ## Features
 * Main messaging window: displays messages in the current conversation and allows new messages to be recieved and sent. Also contains the chats panel.
-    * Chats panel: side panel listing previously created chats that can be accessed and resumed.
+    * Chats panel: side panel listing other users that the current user can chat with.
     * Main messaging window contains options to log-out or access settings
 * Login window: allows the user to login in order to access their messages or provides functionality to create a new account.
     * Login window contains link to the account creation page.
