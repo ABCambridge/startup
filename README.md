@@ -5,7 +5,7 @@ FastChat is a web application that allows for instant messaging between profiles
 ## Features
 * Main messaging window: displays messages in the current conversation and allows new messages to be recieved and sent. Also contains the chats panel.
     * Chats panel: side panel listing previously created chats that can be accessed and resumed.
-    *Main messaging window contains options to log-out or access settings
+    * Main messaging window contains options to log-out or access settings
 * Login window: allows the user to login in order to access their messages or provides functionality to create a new account.
     * Login window contains link to the account creation page.
 * Account Creation Page: lets the user set their display name, login username, and login password.
