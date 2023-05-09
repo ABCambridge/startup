@@ -20,7 +20,7 @@ FastChat is a web application that allows for instant messaging between profiles
 * Web Service Calls: Displays an inspirational quote on the login screen by calling a third party quote service.
 * Web Service Provision: Provides services with back and forth contact with the server and allowing the user to access the FastChat application Calls the server that provides data about what other running instances of the web application.
 * Authentication: Users create an account and then use their account to login each time they access the web application.
-* Data Persistence: Login info, chats (recipients, titles), and messages persist accross each web app session by being stored in a cloud database.
-* Web Sockets: Used to render realtime reception and sending of messages while the user is using the application.
+* Database Persistence: Login info, chats (recipients, titles), and messages persist accross each web app session by being stored in a cloud database and accessed by the web application.
+* Web Sockets: Used to render realtime reception and sending of messages while the user is using the application. Also used to access the quote of the day for the login page.
 ## Design Draft
 ![FastChat design](./FastChat_design.jpg)
