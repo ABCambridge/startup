@@ -6,18 +6,14 @@
     <body>
         <header>
             <h1>FastChat</h1>
-            <nav>
-                <li>
-                    <a href="messageHome.html">Send messages on fast chat</a>
-                </li>
-                <li>
-                    <a href="createAccount.html">Create a new account</a>
-                </li>
-            </nav>
             <hr/>
         </header>
         <main>
-            <h3>FastChat Login page</h3>
+            <h3>Create New FastChat Account</h3>
+            <div>
+                <label for="displayName">Display Name: </label>
+                <input type="text"id="displayName"name="displayNameText"placeholder="name here"/>
+            </div>
             <div>
                 <label for="username">Username: </label>
                 <input type="text"id="username"name="usernameText"placeholder="username here"/>
@@ -27,10 +23,13 @@
                 <input type="text"id="password"name="passwordText"placeholder="password here"/>
             </div>
             <div>
-                <button type="submit">Login</button>
+                <label for="confirmPassword">Confirm Password: </label>
+                <input type="text"id="confirmPassword"name="confirmPasswordText"placeholder="password here"/>
             </div>
             <div>
-                <button type="submit">Create new account</button>
+                <form action="index.html">
+                    <button type="submit">Back to Login screen</button>
+                </form>
             </div>
         </main>
         <footer>

@@ -6,32 +6,49 @@
     <body>
         <header>
             <h1>FastChat</h1>
-            <nav>
-                <li>
-                    <a href="messageHome.html">Send messages on fast chat</a>
-                </li>
-                <li>
-                    <a href="createAccount.html">Create a new account</a>
-                </li>
+            <h5>Logged in as user1</h5>
+            <nav id="optionsMenu">
+                <div>
+                    <form action="settings.html">
+                        <button type="submit">Settings</button>
+                    </form>
+                    <form action="index.html">
+                        <button type="submit">Logout</button>
+                    </form>
+                </div>
             </nav>
             <hr/>
         </header>
         <main>
-            <h3>FastChat Login page</h3>
-            <div>
-                <label for="username">Username: </label>
-                <input type="text"id="username"name="usernameText"placeholder="username here"/>
-            </div>
-            <div>
-                <label for="password">Password: </label>
-                <input type="text"id="password"name="passwordText"placeholder="password here"/>
-            </div>
-            <div>
-                <button type="submit">Login</button>
-            </div>
-            <div>
-                <button type="submit">Create new account</button>
-            </div>
+            <span id="mainMessageScreen">
+                <h4>Conversation with User2</h3>
+                <span id="messages">
+                    <span>
+                        <p>Hi user1, this is user2, how are you?</p>
+                    </span>
+                    <span>
+                        <p>Hey user2, I am doing well, how about yourself?</p>
+                    </span>
+                    <span>
+                        <p>Great. This FastChat app is great!</p>
+                    </span>
+                </span>
+                <span id="inputBar">
+                    <label for="messageBox">Your message: </label>
+                    <input type="text"id="messageBox"name="newMessage"placeholder="type your message here">
+                    <button type="submit">Send</button>
+                </span>
+            </span>
+            <span id="chatListSidePanel">
+                <h4>Conversations</h4>
+                <ul>
+                    <li>User2</li>
+                    <li>User3</li>
+                    <li>User4</li>
+                    <li>User5</li>
+                    <li>User6</li>
+                </ul>
+            </span>
         </main>
         <footer>
             <hr/>
