@@ -30,7 +30,7 @@ For this deliverable, I added the application structure.
 * HTML pages: 4 HTML pages for each "view" the user can access. This includes the login page (index.html), the account creation page, the main messaging page, and the settings page.
 * Links: The bottom of each page includes a link to the public github repository. The submit buttons are a part of form elements that follow specific links to other pages in the application.
 * Text: Messages, conversations, the inspirational quote, and text field labels are represented with the necessary text to describe the structure of the application.
-* Images: The header of each page includes the head background image imbedded in the HTML.
+* Images: The header of each page includes the FastChat logo image imbedded in the HTML.
 * Login placeholder: login page (index.html) contains text fields for the user to input their username and password. Username is displayed in the header of messageHome.html once the user logs in.
 * Database data: messageHome.html lists other users in the data base that the current user can select to chat with (under the "Conversations" section).
 * WebSocket data: messageHome.html lists messages in the current chat that will be updated live through WebSockets as other users message the current user through the server (under "Conversation with User2" section).
