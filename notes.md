@@ -5,3 +5,5 @@
 [Notes on Shell Scripting](./ShellScript.md)
 
 [A few notes on Code Pen](./CodePen.md)
+
+[HTML notes](./HTML.md)
