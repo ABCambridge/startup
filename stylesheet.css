@@ -2,8 +2,34 @@
     background-color:rgba(65, 182, 83, 0.57);
 }
 .alternateButton{ 
-    background-color: azure;
+    background-color: rgb(89, 143, 218);
 }
 .centeredContent {
     text-align: center;
+}
+.incomingMessage{
+    text-align: start;
+}
+.outgoingMessage{
+    text-align: end;
+}
+#homeScreen{
+    overflow:auto;
+}
+#mainMessageScreen{
+    float:left;
+    width: 75%;
+    margin-left:10%;
+}
+#chatListSidePanel{
+    float:right
+}
+#optionsMenu{
+    overflow: auto;
+}
+#settingsButton{
+    float:left;
+}
+#logoutButton{
+    float:right;
 }

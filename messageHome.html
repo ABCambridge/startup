@@ -11,47 +11,49 @@
             <h5>Logged in as user1</h5>
             <nav id="optionsMenu">
                 <div>
-                    <form action="settings.html">
-                        <button type="submit">Settings</button>
+                    <form action="index.html">
+                        <button type="submit"class="alternateButton"id="logoutButton">Logout</button>
                     </form>
                     <br />
-                    <form action="index.html">
-                        <button type="submit">Logout</button>
+                    <form action="settings.html">
+                        <button type="submit"class="alternateButton"id="settingsButton">Settings</button>
                     </form>
                 </div>
             </nav>
             <hr/>
         </header>
         <main>
-            <span id="mainMessageScreen">
-                <h4>Conversation with User2</h3>
-                <span id="messages">
-                    <span>
-                        <p>Hi user1, this is user2, how are you?</p>
+            <div id="homeScreen">
+                <span id="mainMessageScreen">
+                    <h4>Conversation with User2</h3>
+                    <span id="messages">
+                        <span>
+                            <p class="incomingMessage">Hi user1, this is user2, how are you?</p>
+                        </span>
+                        <span>
+                            <p class="outgoingMessage">Hey user2! I am doing well, how about yourself?</p>
+                        </span>
+                        <span>
+                            <p class="incomingMessage">Great. This FastChat app is great!</p>
+                        </span>
                     </span>
-                    <span>
-                        <p>Hey user2, I am doing well, how about yourself?</p>
-                    </span>
-                    <span>
-                        <p>Great. This FastChat app is great!</p>
+                    <span id="inputBar">
+                        <label for="messageBox">Your message: </label>
+                        <input type="text"id="messageBox"name="newMessage"placeholder="type your message here">
+                        <button type="submit"class="positiveButton">Send</button>
                     </span>
                 </span>
-                <span id="inputBar">
-                    <label for="messageBox">Your message: </label>
-                    <input type="text"id="messageBox"name="newMessage"placeholder="type your message here">
-                    <button type="submit">Send</button>
+                <span id="chatListSidePanel">
+                    <h4>Conversations</h4>
+                    <ul>
+                        <li>User2</li>
+                        <li>User3</li>
+                        <li>User4</li>
+                        <li>User5</li>
+                        <li>User6</li>
+                    </ul>
                 </span>
-            </span>
-            <span id="chatListSidePanel">
-                <h4>Conversations</h4>
-                <ul>
-                    <li>User2</li>
-                    <li>User3</li>
-                    <li>User4</li>
-                    <li>User5</li>
-                    <li>User6</li>
-                </ul>
-            </span>
+            </div>
         </main>
         <footer>
             <hr/>
