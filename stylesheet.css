@@ -16,6 +16,9 @@
 #homeScreen{
     overflow:auto;
 }
+#inputBar{
+    float:right;
+}
 #mainMessageScreen{
     float:left;
     width: 75%;
@@ -27,9 +30,7 @@
 #optionsMenu{
     overflow: auto;
 }
-#settingsButton{
+.homeMenuButton{
     float:left;
-}
-#logoutButton{
-    float:right;
+    margin:2px;
 }
