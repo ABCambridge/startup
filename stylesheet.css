@@ -30,10 +30,17 @@
 #optionsMenu{
     overflow: auto;
 }
-.homeMenuButton{
+.menuButton{
     float:left;
     margin:2px;
 }
 #conversationTitle{
     text-align: center;
+}
+.pageHeader{
+    overflow: auto;
+}
+.pageTitle{
+    margin:5px;
+    vertical-align:middle;
 }
