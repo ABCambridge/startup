@@ -1,0 +1,9 @@
+.positiveButton {
+    background-color:rgba(65, 182, 83, 0.57);
+}
+.alternateButton{ 
+    background-color: azure;
+}
+.centeredContent {
+    text-align: center;
+}
