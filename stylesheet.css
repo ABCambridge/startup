@@ -13,6 +13,19 @@
 .outgoingMessage{
     text-align: end;
 }
+button{
+    border-radius: 8px;
+}
+footer{
+    text-align: center;
+}
+body{
+    margin:0px;
+}
+header{
+    background-color: hsl(210, 73%, 43%);
+    border-radius: 5px;
+}
 #homeScreen{
     overflow:auto;
 }
@@ -36,6 +49,9 @@
 }
 #conversationTitle{
     text-align: center;
+}
+#currentUser{
+    text-align: end;
 }
 .pageHeader{
     overflow: auto;
