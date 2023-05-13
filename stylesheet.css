@@ -18,13 +18,24 @@ button{
 }
 footer{
     text-align: center;
+    justify-content: center;
+    flex: 0 100px;
 }
 body{
+    display:flex;
+    flex-direction: column;
     margin:0px;
+    height: 100vh;
 }
 header{
-    background-color: hsl(210, 73%, 43%);
     border-radius: 5px;
+    flex: 0 150px;
+}
+.borderItem{
+    background-color: hsla(210, 77%, 44%, 0.534);
+}
+main{
+    flex-grow: 1;
 }
 #homeScreen{
     overflow:auto;
