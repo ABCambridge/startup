@@ -1,26 +1,3 @@
-.positiveButton {
-    background-color:rgba(65, 182, 83, 0.57);
-}
-.alternateButton{ 
-    background-color: rgb(89, 143, 218);
-}
-.centeredContent {
-    text-align: center;
-}
-.incomingMessage{
-    text-align: start;
-}
-.outgoingMessage{
-    text-align: end;
-}
-button{
-    border-radius: 8px;
-}
-footer{
-    text-align: center;
-    justify-content: center;
-    flex: 0 100px;
-}
 body{
     display:flex;
     flex-direction: column;
@@ -30,10 +7,29 @@ body{
 header{
     border-radius: 5px;
     flex: 0 150px; 
+    display:flex;
+    background-image: url("FastChat_Logo.png");
 }
-.borderItem{
+footer{
+    text-align: center;
+    justify-content: center;
+    flex: 0 100px;
+}
+.positiveButton {
+    background-color:rgba(65, 182, 83, 0.57);
+}
+.alternateButton{ 
+    background-color: rgb(89, 143, 218);
+}
+.centeredContent {
+    text-align: center;
+}
+button{
+    border-radius: 8px;
+}
+/* .borderItem{
     background-color: hsla(268, 78%, 39%, 0.884);
-}
+} */
 main{
     flex: 1 calc(100vh - 110px);
     display:flex;
@@ -41,7 +37,9 @@ main{
     align-items: center;
     justify-content: space-around;
 }
-#homeScreen{
+
+
+/* #homeScreen{
     overflow:auto;
 }
 #inputBar{
@@ -74,4 +72,4 @@ main{
 .pageTitle{
     margin:5px;
     vertical-align:middle;
-}
+} */
