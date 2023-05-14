@@ -29,13 +29,17 @@ body{
 }
 header{
     border-radius: 5px;
-    flex: 0 150px;
+    flex: 0 150px; 
 }
 .borderItem{
-    background-color: hsla(210, 77%, 44%, 0.534);
+    background-color: hsla(268, 78%, 39%, 0.884);
 }
 main{
-    flex-grow: 1;
+    flex: 1 calc(100vh - 110px);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
 #homeScreen{
     overflow:auto;
