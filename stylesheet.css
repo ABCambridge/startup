@@ -9,6 +9,7 @@ header{
     flex: 0 150px; 
     display:flex;
     background-image: url("FastChat_Logo.png");
+    background-size: 50vw 130px;
 }
 footer{
     text-align: center;
