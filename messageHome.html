@@ -23,9 +23,24 @@
         </header>
         <main>
             <div id="homeScreen">
+                <div id="chatListSidePanel">
+                    <h4>Conversations</h4>
+                    <div id="conversations" class="containerView">
+                        <span class="conversation">User2</span>
+                        <span class="conversation">User3</span>
+                        <span class="conversation">User5</span>
+                        <span class="conversation">User6</span>
+                        <span class="conversation">User4</span>
+                        <span class="conversation">User2</span>
+                        <span class="conversation">User3</span>
+                        <span class="conversation">User4</span>
+                        <span class="conversation">User5</span>
+                        <span class="conversation">User6</span>
+                    </div>
+                </div>
                 <div id="mainMessageScreen">
                     <h4 id="conversationTitle">Conversation with User2</h3>
-                    <span id="messages">
+                    <span id="messages" class="containerView">
                         <span class="message incomingMessage">
                             <p>Hi user1, this is user2, how are you?</p>
                         </span>
@@ -49,21 +64,6 @@
                         <input type="text"id="messageBox"name="newMessage"placeholder="New message">
                         <button type="submit"class="positiveButton">Send</button>
                     </span>
-                </div>
-                <div id="chatListSidePanel">
-                    <h4>Conversations</h4>
-                    <div id="conversations">
-                        <span class="userListItem">User2</span>
-                        <span class="userListItem">User3</span>
-                        <span class="userListItem">User4</span>
-                        <span class="userListItem">User5</span>
-                        <span class="userListItem">User6</span>
-                        <span class="userListItem">User2</span>
-                        <span class="userListItem">User3</span>
-                        <span class="userListItem">User4</span>
-                        <span class="userListItem">User5</span>
-                        <span class="userListItem">User6</span>
-                    </div>
                 </div>
             </div>
         </main>

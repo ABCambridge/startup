@@ -28,18 +28,26 @@ nav form{
     #homeScreen{
         flex-direction: column;
     }
+    #messages{
+        max-height: 200px;
+    }
+    #conversations{
+        max-height: 80px;
+    }
 }
 #mainMessageScreen{
     flex:2;
     display: flex;
     flex-direction: column;
 }
+.containerView{
+    background-color: rgb(62, 151, 199);
+    border-radius: 6px;
+}
 #messages{
     display: flex;
     flex-direction: column;   
     overflow-y: auto; 
-    background-color: rgb(62, 151, 199);
-    border-radius: 6px;
 }
 .message{
     display: flex;
@@ -83,4 +91,8 @@ nav form{
     flex-direction: column;
     text-align: start;
     overflow-y: auto;
+    margin-left:2em;
+}
+.conversation{
+    padding:2%;
 }
