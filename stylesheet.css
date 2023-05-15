@@ -55,6 +55,11 @@ footer{
 button{
     border-radius: 8px;
 }
+button:hover{
+    border-style: solid;
+    border-color: black;
+    border-width:3px;
+}
 .positiveButton {
     background-color:rgba(65, 182, 83, 0.57);
 }
@@ -69,4 +74,7 @@ button{
     border-radius: 4px;
     height: 2em;
     background-color: rgb(181, 212, 240);
+}
+.inputLocation:hover{
+    background-color: rgb(158, 202, 240);
 }
