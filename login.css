@@ -1,7 +1,12 @@
 main{
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
+}
+@media(max-width: 550px){
+    main{
+        flex-direction: column;
+    }
 }
 main div{
-    padding: 1%;
+    padding: 3%;
 }

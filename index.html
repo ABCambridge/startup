@@ -11,29 +11,33 @@
             <h1 class="menuButton pageTitle" >FastChat</h1>
         </header>
         <main class="centeredContent">
-            <h3>Login to FastChat </h3>
-            <div>
-                    <p>"An inspirational quote of the day"</p>
-                    <p><i>- Andrew Cambridge</i></p>
+            <div id="loginInformation">
+                <h3>Login to FastChat </h3>
+                <div>
+                    <label for="username">Username: </label>
+                    <input type="text"class="inputLocation"id="username"name="usernameText"placeholder="username here"/>
+                </div>
+                <div>
+                    <label for="password">Password: </label>
+                    <input type="text"class="inputLocation"id="password"name="passwordText"placeholder="password here"/>
+                </div>
+                <div>
+                    <form action="messageHome.html">
+                        <button type="submit"class="positiveButton">Login</button>
+                    </form>
+                </div>
+                <div>
+                    <form action="createAccount.html">
+                        <button type="submit"class="alternateButton">Create new account</button>
+                    </form>
+                </div>
             </div>
-            <image id="introImage" src="./FastChat_Logo.png"alt="FastChat Logo"width="300"/>
-            <div>
-                <label for="username">Username: </label>
-                <input type="text"class="inputLocation"id="username"name="usernameText"placeholder="username here"/>
-            </div>
-            <div>
-                <label for="password">Password: </label>
-                <input type="text"class="inputLocation"id="password"name="passwordText"placeholder="password here"/>
-            </div>
-            <div>
-                <form action="messageHome.html">
-                    <button type="submit"class="positiveButton">Login</button>
-                </form>
-            </div>
-            <div>
-                <form action="createAccount.html">
-                    <button type="submit"class="alternateButton">Create new account</button>
-                </form>
+            <div id="loginDecorations">
+                <div>
+                        <p>"An inspirational quote of the day"</p>
+                        <p><i>- Andrew Cambridge</i></p>
+                </div>  
+                <image id="introImage" src="./FastChat_Logo.png"alt="FastChat Logo"width="300"/>
             </div>
         </main>
         <footer class="borderItem">

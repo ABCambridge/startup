@@ -72,12 +72,16 @@ nav form{
 }
 .message{
     display: flex;
+    flex-direction: row;
     align-items: center;
     border-radius: 10px;
-    height: 2em;
+    height: auto;
     margin:.5em;
     padding:1%;
-    width: 300px;
+    max-width: 80%;
+}
+.message p{
+    margin: 0%;
 }
 .incomingMessage{
     align-self: flex-start;
