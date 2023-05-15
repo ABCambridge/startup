@@ -1,4 +1,47 @@
-header{
+#headerOptions{
     display: flex;
+    flex-direction: row;
+}
+#optionsMenu{
+    padding-right: 2em;
+    display: flex;
+    flex-direction: row;
     align-items: center;
+}
+nav form{
+    padding:3%;
+}
+#homeScreen{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    padding:2%;
+}
+#mainMessageScreen{
+    flex:2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+.message{
+
+}
+.incomingMessage{
+    text-align: start;
+}
+.outgoingMessage{
+    text-align: end;
+}
+#inputBar{
+    align-self: flex-end;
+}
+.userListItem{
+    padding-bottom: 2%;
+}
+#chatListSidePanel{
+    flex:1;
+    text-align: end;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
 }

@@ -8,31 +8,31 @@
     <body>
         <header>
             <h1>FastChat</h1>
-            <h5 id="currentUser">Logged in as user1</h5>
-            <nav>
-                <div id="optionsMenu">
+            <div id="headerOptions">
+                <nav id="optionsMenu">
                     <form action="index.html">
                         <button type="submit"class="alternateButton menuButton"id="logoutButton">Logout</button>
                     </form>
                     <form action="settings.html">
                         <button type="submit"class="alternateButton menuButton"id="settingsButton">Settings</button>
                     </form>
-                </div>
-            </nav>
+                </nav>
+                <h5 id="currentUser">Logged in as user1</h5>
+            </div>
         </header>
         <main>
             <div id="homeScreen">
-                <h4 id="conversationTitle">Conversation with User2</h3>
-                <span id="mainMessageScreen">
+                <div id="mainMessageScreen">
+                    <h4 id="conversationTitle">Conversation with User2</h3>
                     <span id="messages">
                         <span>
-                            <p class="incomingMessage">Hi user1, this is user2, how are you?</p>
+                            <p class=" message incomingMessage">Hi user1, this is user2, how are you?</p>
                         </span>
                         <span>
-                            <p class="outgoingMessage">Hey user2! I am doing well, how about yourself?</p>
+                            <p class="message outgoingMessage">Hey user2! I am doing well, how about yourself?</p>
                         </span>
                         <span>
-                            <p class="incomingMessage">Great. This FastChat app is great!</p>
+                            <p class="message incomingMessage">Great. This FastChat app is great!</p>
                         </span>
                     </span>
                     <span id="inputBar">
@@ -40,17 +40,15 @@
                         <input type="text"id="messageBox"name="newMessage"placeholder="type your message here">
                         <button type="submit"class="positiveButton">Send</button>
                     </span>
-                </span>
-                <span id="chatListSidePanel">
+                </div>
+                <div id="chatListSidePanel">
                     <h4>Conversations</h4>
-                    <ul>
-                        <li>User2</li>
-                        <li>User3</li>
-                        <li>User4</li>
-                        <li>User5</li>
-                        <li>User6</li>
-                    </ul>
-                </span>
+                    <span class="userListItem">User2</span>
+                    <span class="userListItem">User3</span>
+                    <span class="userListItem">User4</span>
+                    <span class="userListItem">User5</span>
+                    <span class="userListItem">User6</span>
+                </div>
             </div>
         </main>
         <footer>

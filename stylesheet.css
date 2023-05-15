@@ -8,9 +8,11 @@ header{
     border-radius: 5px;
     flex: 0 150px; 
     display:flex;
+    align-items: start;
+    flex-direction: column;
     background-image: url("FastChat_Logo.png");
     background-size: 50vw 130px;
-    
+    padding-left: 2em;
 }
 main{
     flex: 1 calc(100vh - 100px);
