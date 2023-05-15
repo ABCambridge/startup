@@ -16,24 +16,41 @@ nav form{
     flex-direction: row;
     width: 100vw;
     padding:2%;
+    height: calc(85vh - 110px);
 }
 #mainMessageScreen{
     flex:2;
     text-align: center;
     display: flex;
     flex-direction: column;
+    border: black solid 5px;
+}
+#messages{
+    display: flex;
+    flex-direction: column;    
 }
 .message{
-
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    height: 2em;
+    margin:.5em;
+    padding:1%;
+    width: 300px;
 }
 .incomingMessage{
-    text-align: start;
+    align-self: flex-start;
+    justify-content: end;
+    background-color: rgb(35, 194, 141);
 }
 .outgoingMessage{
-    text-align: end;
+    align-self: flex-end;
+    justify-content: start;
+    background-color: rgb(210, 205, 39);
 }
 #inputBar{
     align-self: flex-end;
+    padding-top: 2%;
 }
 .userListItem{
     padding-bottom: 2%;
