@@ -1,29 +1,36 @@
-body{
+html{
+    height: 100%;
+} body{
     display:flex;
     flex-direction: column;
     margin:0px;
-    height: 100vh;
+    min-height: 100%;
+    width: 100%;
 }
 header{
-    flex: 0; 
+    flex: 0 75px; 
     display:flex;
     align-items: start;
-    flex-direction: column;
-    background-image: url("FastChat_Logo.png");
-    background-size: 100vw;
-    background-repeat: no-repeat;
-    /* background-size: 50vw 23vh;
-    padding-left: 2em;
-    background-attachment:local */
+    align-items: center;
+    flex-direction: row;
+    background-color: gray;
+}
+header h1{
+    padding-left: 2.5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin: 0%;
 }
 main{
-    flex: 1 calc(100vh - 300px);
+    flex: 1 calc(100vh - 200px);
     display:flex;
     align-items: center;
     justify-content: space-around;
     background-color: rgb(121, 204, 248);
 }
 footer{
+    display: flex;
+    flex-direction: column;
     text-align: center;
     justify-content: center;
     flex: 0 100px;
