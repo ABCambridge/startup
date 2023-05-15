@@ -11,10 +11,32 @@ header{
     background-image: url("FastChat_Logo.png");
     background-size: 50vw 130px;
 }
+main{
+    flex: 1 calc(100vh - 110px);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
 footer{
     text-align: center;
     justify-content: center;
     flex: 0 100px;
+    background-color: gray;
+}
+
+@media (max-height: 600px){
+    header{
+        display:none;
+    }
+    footer{
+        display:none;
+    }
+}
+
+/*buttons*/
+button{
+    border-radius: 8px;
 }
 .positiveButton {
     background-color:rgba(65, 182, 83, 0.57);
@@ -25,19 +47,9 @@ footer{
 .centeredContent {
     text-align: center;
 }
-button{
-    border-radius: 8px;
-}
 /* .borderItem{
     background-color: hsla(268, 78%, 39%, 0.884);
 } */
-main{
-    flex: 1 calc(100vh - 110px);
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
 
 
 /* #homeScreen{
