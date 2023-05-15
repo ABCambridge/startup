@@ -5,19 +5,20 @@ body{
     height: 100vh;
 }
 header{
-    border-radius: 5px;
-    flex: 0 150px; 
+    flex: 0; 
     display:flex;
     align-items: start;
     flex-direction: column;
     background-image: url("FastChat_Logo.png");
-    background-size: 50vw 130px;
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    /* background-size: 50vw 23vh;
     padding-left: 2em;
+    background-attachment:local */
 }
 main{
-    flex: 1 calc(100vh - 110px);
+    flex: 1 calc(100vh - 300px);
     display:flex;
-    
     align-items: center;
     justify-content: space-around;
     background-color: rgb(121, 204, 248);
