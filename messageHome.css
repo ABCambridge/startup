@@ -94,7 +94,8 @@ nav form{
     padding: 2%;
 }
 #messageBox{
-    width: 250px;
+    width: 300px;
+    height: 50px;
 }
 .userListItem{
     padding-bottom: 2%;
