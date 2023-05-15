@@ -10,13 +10,14 @@ header{
     display:flex;
     background-image: url("FastChat_Logo.png");
     background-size: 50vw 130px;
+    
 }
 main{
-    flex: 1 calc(100vh - 110px);
+    flex: 1 calc(100vh - 100px);
     display:flex;
-    flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    background-color: rgb(121, 204, 248);
 }
 footer{
     text-align: center;
