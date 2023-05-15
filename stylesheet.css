@@ -15,8 +15,9 @@ header{
     padding-left: 2em;
 }
 main{
-    flex: 1 calc(100vh - 100px);
+    flex: 1 calc(100vh - 110px);
     display:flex;
+    
     align-items: center;
     justify-content: space-around;
     background-color: rgb(121, 204, 248);
@@ -28,7 +29,7 @@ footer{
     background-color: gray;
 }
 
-@media (max-height: 600px){
+@media (max-height: 300px){
     header{
         display:none;
     }

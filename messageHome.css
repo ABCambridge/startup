@@ -17,17 +17,29 @@ nav form{
     width: 100vw;
     padding:2%;
     height: calc(85vh - 110px);
+    overflow-y: auto;
+}
+@media (max-height:300px){
+    #homeScreen{
+        height: calc(100vh - 15px);
+    }
+}
+@media (max-width: 700px){
+    #homeScreen{
+        flex-direction: column;
+    }
 }
 #mainMessageScreen{
     flex:2;
-    text-align: center;
     display: flex;
     flex-direction: column;
-    border: black solid 5px;
 }
 #messages{
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;   
+    overflow-y: auto; 
+    background-color: rgb(62, 151, 199);
+    border-radius: 6px;
 }
 .message{
     display: flex;
@@ -40,25 +52,35 @@ nav form{
 }
 .incomingMessage{
     align-self: flex-start;
-    justify-content: end;
+    justify-content: start;
     background-color: rgb(35, 194, 141);
 }
 .outgoingMessage{
     align-self: flex-end;
-    justify-content: start;
+    text-align: start;
     background-color: rgb(210, 205, 39);
 }
 #inputBar{
     align-self: flex-end;
-    padding-top: 2%;
+    padding: 2%;
+}
+#messageBox{
+    width: 250px;
 }
 .userListItem{
     padding-bottom: 2%;
 }
 #chatListSidePanel{
     flex:1;
-    text-align: end;
+    text-align: center;
     list-style: none;
     display: flex;
     flex-direction: column;
+    margin: 5%;
+}
+#conversations{
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    overflow-y: auto;
 }

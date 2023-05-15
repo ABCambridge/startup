@@ -4,6 +4,7 @@
         <title>FastChat</title>
         <link rel="stylesheet"href="stylesheet.css"/>
         <link rel="stylesheet"href="messageHome.css"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
     <body>
         <header>
@@ -34,6 +35,15 @@
                         <span class="message incomingMessage">
                             <p>Great. This FastChat app is great!</p>
                         </span>
+                        <span class="message outgoingMessage">
+                            <p>Hi user1, this is user2, how are you?</p>
+                        </span>
+                        <span class="message incomingMessage">
+                            <p>Hey user2! I am doing well, how about yourself?</p>
+                        </span>
+                        <span class="message outgoingMessage">
+                            <p>Great. This FastChat app is great!</p>
+                        </span>
                     </span>
                     <span id="inputBar">
                         <input type="text"id="messageBox"name="newMessage"placeholder="New message">
@@ -42,11 +52,18 @@
                 </div>
                 <div id="chatListSidePanel">
                     <h4>Conversations</h4>
-                    <span class="userListItem">User2</span>
-                    <span class="userListItem">User3</span>
-                    <span class="userListItem">User4</span>
-                    <span class="userListItem">User5</span>
-                    <span class="userListItem">User6</span>
+                    <div id="conversations">
+                        <span class="userListItem">User2</span>
+                        <span class="userListItem">User3</span>
+                        <span class="userListItem">User4</span>
+                        <span class="userListItem">User5</span>
+                        <span class="userListItem">User6</span>
+                        <span class="userListItem">User2</span>
+                        <span class="userListItem">User3</span>
+                        <span class="userListItem">User4</span>
+                        <span class="userListItem">User5</span>
+                        <span class="userListItem">User6</span>
+                    </div>
                 </div>
             </div>
         </main>
