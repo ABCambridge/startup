@@ -26,6 +26,11 @@ header h1{
     padding-bottom: 2%;
     margin: 0%;
 }
+@media(max-width:190px){
+    h1{
+        font-size: small;
+    }
+}
 main{
     flex: 1 calc(100vh - 200px);
     display:flex;
@@ -42,7 +47,7 @@ footer{
     background-color: gray;
 }
 
-@media (max-height: 300px){
+@media (max-height: 430px){
     header{
         display:none;
     }
@@ -69,12 +74,17 @@ button:hover{
 .centeredContent {
     text-align: center;
 }
-
 .inputLocation{
     border-radius: 4px;
     height: 2em;
+    width:200px;
     background-color: rgb(181, 212, 240);
 }
 .inputLocation:hover{
     background-color: rgb(158, 202, 240);
+}
+@media(max-width:200px){
+    .inputLocation{
+        width:80vw;
+    }
 }
