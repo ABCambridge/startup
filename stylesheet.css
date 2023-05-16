@@ -6,6 +6,7 @@ html{
     margin:0px;
     min-height: 100%;
     width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
 }
 header{
     flex: 0 75px; 
@@ -59,6 +60,7 @@ footer{
 /*buttons*/
 button{
     border-radius: 8px;
+    font-family:cursive;
 }
 button:hover{
     border-style: solid;
