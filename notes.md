@@ -7,3 +7,5 @@
 [A few notes on Code Pen](./CodePen.md)
 
 [HTML notes](./HTML.md)
+
+[JavaScript notes](./JavaScript.md)
