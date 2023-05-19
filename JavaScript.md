@@ -21,3 +21,8 @@
 
 # This pointer
 * a function's this pointer is usually that of its owning object, but global functions don't have an owning object, so it is undefined.
+
+# Classes and objects
+* remember to use commas when explicitly declaring an object.
+* when you create a getter or setter method, don't call it with () or else there will be an error.
+* when throwing an error, you can use "new Error()" with a message passed into the constructor, rather than creating your own object with a message data member.
