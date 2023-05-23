@@ -19,7 +19,7 @@ function verifyAuth(){
 verifyAuth();
 
 function updateUserDisplay(){
-
+    
 }
 
 updateUserDisplay();
