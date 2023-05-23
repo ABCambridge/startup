@@ -5,6 +5,7 @@
         <link rel="stylesheet"href="stylesheet.css"/>
         <link rel="stylesheet"href="login.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="login.js"></script>
     </head>
     <body>
         <header class="pageHeader borderItem">
@@ -22,9 +23,7 @@
                     <input type="text"class="inputLocation"id="password"name="passwordText"placeholder="password here"/>
                 </div>
                 <div>
-                    <form action="messageHome.html">
-                        <button type="submit"class="positiveButton">Login</button>
-                    </form>
+                    <button type="submit"class="positiveButton"onclick="login()">Login</button>
                 </div>
                 <div>
                     <form action="createAccount.html">
