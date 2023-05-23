@@ -5,15 +5,16 @@
         <link rel="stylesheet"href="stylesheet.css"/>
         <link rel="stylesheet"href="messageHome.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="messageHome.js"></script>
     </head>
     <body>
         <header>
             <h1>FastChat</h1>
             <div id="headerOptions">
                 <nav id="optionsMenu">
-                    <form action="index.html">
-                        <button type="submit"class="alternateButton menuButton"id="logoutButton">Logout</button>
-                    </form>
+                    <div>
+                        <button type="submit"class="alternateButton menuButton"onclick="logout()"id="logoutButton">Logout</button>
+                    </div>
                     <form action="settings.html">
                         <button type="submit"class="alternateButton menuButton"id="settingsButton">Settings</button>
                     </form>
