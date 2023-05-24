@@ -20,6 +20,9 @@
                     </form>
                 </nav>
                 <h5 id="currentUser">Logged in as user1</h5>
+                <script>
+                    updateUserDisplay();
+                </script>
             </div>
         </header>
         <main>
@@ -27,20 +30,16 @@
                 <div id="chatListSidePanel">
                     <h4 id="conversationHeader">Conversations</h4>
                     <div id="conversations" class="containerView">
-                        <span class="conversation">User2</span>
-                        <span class="conversation">User3</span>
-                        <span class="conversation">User5</span>
-                        <span class="conversation">User6</span>
-                        <span class="conversation">User4</span>
-                        <span class="conversation">User2</span>
-                        <span class="conversation">User3</span>
-                        <span class="conversation">User4</span>
-                        <span class="conversation">User5</span>
-                        <span class="conversation">User6</span>
                     </div>
                 </div>
+                <script>
+                    loadConversations();
+                </script>
                 <div id="mainMessageScreen">
                     <h4 id="conversationTitle">Conversation with User2</h3>
+                        <script>
+                            updateConversationHeader();
+                        </script>
                     <span id="messages" class="containerView">
                         <span class="message incomingMessage">
                             <p>Hi user1, this is user2, how are you?</p>
