@@ -7,7 +7,58 @@ const TEST_PASSWORD = "Cambridge";
 let currentConversation = null;
 //"conversations" represents the different conversations that will be loaded in from the database
 const conversations = ["Jimmy","Joseph","Dave","Catherine","Stephanie","Emma","Erin"];
-const messages = ["hi there, how are you?","I am doing well, how about yourself","what's up","I'm good","cool","nice!"];
+//"messages" represents the conversations that would be loaded in from the database based on which conversation is opened
+const introMessage = {
+    text:"This is the beginning of your conversation with ",
+    type:"systemMessage"
+};
+const messages = [
+    {
+        text:"hi there, how are you?",
+        type:"incomingMessage",
+        user:"Jimmy"
+    },
+    {
+        text:"I am doing well, how about yourself?",
+        type:"outgoingMessage",
+        user:"Jimmy"
+    },
+    {
+        text:"what's up?",
+        type:"incomingMessage",
+        user:"Joseph"
+    },
+    {
+        text:"hey Emma, how are you doing?",
+        type:"outgoingMessage",
+        user:"Emma"
+    },
+    {
+        text:"I'm good",
+        type:"outgoingMessage",
+        user:"Emma"
+    },
+    {
+        text:"hey Stephanie, how are you doing?",
+        type:"outgoingMessage",
+        user:"Stephanie"
+    },
+    {
+        text:"cool",
+        type:"incomingMessage",
+        user:"Stephanie"
+    },
+    {
+        text:"I won the lottery!",
+        type:"outgoingMessage",
+        user:"Erin"
+    },
+    {
+        text:"nice!",
+        type:"incomingMessage",
+        user:"Erin"
+    }
+];
 
 verifyAuth();
 
@@ -53,13 +104,23 @@ function loadConversations(){
 function loadMessages(){
     //THIS would normally get all of the conversations from the database connected to the current user and selected conversation
     if(currentConversation !== null){
-        const messages = document.getElementById("messages");
+        const messageWindow = document.querySelector("#messages");
+        removeChildrenNodes(messageWindow);
         messages.forEach((message) => {
-            let newMessage = document.createElement('span');
-            newMessage.setAttribute("class","message");
-            newMessage.textContent = message;
-            messages.appendChild(newMessage);
+            if(message.user === currentConversation.textContent){
+                let newMessage = document.createElement('span');
+                // newMessage.setAttribute('class','message');
+                newMessage.setAttribute('class',`message ${message.type}`);
+                newMessage.textContent = message.text;
+                messageWindow.appendChild(newMessage);
+            }
         });
+    }
+}
+
+function removeChildrenNodes(parent){
+    while(parent.firstChild){
+        parent.removeChild(parent.firstChild);
     }
 }
 
