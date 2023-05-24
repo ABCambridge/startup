@@ -101,6 +101,8 @@ function loadConversations(){
     });
 }
 
+let acceptMessages = true;
+
 function loadMessages(){
     //THIS would normally get all of the conversations from the database connected to the current user and selected conversation
     if(currentConversation !== null){
@@ -110,21 +112,25 @@ function loadMessages(){
 
         messages.forEach((message) => {
             if(message.user === currentConversation.textContent){
-                let newMessage = document.createElement('span');
-                newMessage.setAttribute('class',`message ${message.type}`);
-                newMessage.textContent = message.text;
-                messageWindow.appendChild(newMessage);
+                insertMessage(message,messageWindow);    
             }
         });
     }
 
-    randomMessageGeneration();
+    acceptMessages = true;
 }
 
 function removeChildrenNodes(parent){
     while(parent.firstChild){
         parent.removeChild(parent.firstChild);
     }
+}
+
+function insertMessage(message,messageWindow){
+    let newMessage = document.createElement('span');
+    newMessage.setAttribute('class',`message ${message.type}`);
+    newMessage.textContent = message.text;
+    messageWindow.appendChild(newMessage);
 }
 
 function addStartingMessgae(messages){
@@ -134,8 +140,19 @@ function addStartingMessgae(messages){
     messages.appendChild(sysMessage);
 }
 
-function randomMessageGeneration(){
-
+async function getIncomingMessages(){
+    // represents the function that will receive and load the incoming messages from the web socket
+    setInterval(() => {
+        if(acceptMessages && currentConversation !== null){
+            let incomingMessage = {
+                text: "Man, CS260 is such a cool class!",
+                type: "incomingMessage",
+                user: currentConversation.textContent
+            }
+            messages.push(incomingMessage);//"adding" it to the database
+            insertMessage(incomingMessage,document.querySelector("#messages"));
+        }
+    },10000);
 }
 
 function selectConversation(conversation){
