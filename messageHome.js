@@ -140,7 +140,7 @@ function addStartingMessgae(messages){
     messages.appendChild(sysMessage);
 }
 
-async function getIncomingMessages(){
+function getIncomingMessages(){
     // represents the function that will receive and load the incoming messages from the web socket
     setInterval(() => {
         if(acceptMessages && currentConversation !== null){
