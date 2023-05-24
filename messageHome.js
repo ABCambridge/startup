@@ -101,7 +101,7 @@ function loadConversations(){
     });
 }
 
-let acceptMessages = true;
+let acceptMessages = false;
 
 function loadMessages(){
     //THIS would normally get all of the conversations from the database connected to the current user and selected conversation
@@ -159,6 +159,20 @@ function selectConversation(conversation){
     currentConversation = conversation;
     updateConversationHeader();
     loadMessages();
+}
+
+function sendMessage(){
+    if(acceptMessages && currentConversation !== null){
+        const inputBox = document.querySelector("#messageBox");
+        let outgoingMessage = {
+            text: inputBox.value,
+            type: "outgoingMessage",
+            user: currentConversation.textContent
+        }
+        messages.push(outgoingMessage);//insert into database
+        insertMessage(outgoingMessage,document.querySelector("#messages"));
+        inputBox.value = "";
+    }
 }
 
 function logout(){
