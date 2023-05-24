@@ -35,7 +35,7 @@ const messages = [
     },
     {
         text:"I'm good",
-        type:"outgoingMessage",
+        type:"incomingMessage",
         user:"Emma"
     },
     {
@@ -106,22 +106,36 @@ function loadMessages(){
     if(currentConversation !== null){
         const messageWindow = document.querySelector("#messages");
         removeChildrenNodes(messageWindow);
+        addStartingMessgae(messageWindow);
+
         messages.forEach((message) => {
             if(message.user === currentConversation.textContent){
                 let newMessage = document.createElement('span');
-                // newMessage.setAttribute('class','message');
                 newMessage.setAttribute('class',`message ${message.type}`);
                 newMessage.textContent = message.text;
                 messageWindow.appendChild(newMessage);
             }
         });
     }
+
+    randomMessageGeneration();
 }
 
 function removeChildrenNodes(parent){
     while(parent.firstChild){
         parent.removeChild(parent.firstChild);
     }
+}
+
+function addStartingMessgae(messages){
+    let sysMessage = document.createElement('span');
+    sysMessage.setAttribute('class','message systemMessage');
+    sysMessage.textContent = introMessage.text + currentConversation.textContent + '.';
+    messages.appendChild(sysMessage);
+}
+
+function randomMessageGeneration(){
+
 }
 
 function selectConversation(conversation){

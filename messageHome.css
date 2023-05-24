@@ -93,6 +93,13 @@ nav form{
     text-align: start;
     background-color: rgb(210, 205, 39);
 }
+.systemMessage{
+    align-self: center;
+    text-align: start;
+    background-color: bisque;
+    font-size: small;
+    font-style: italic;
+}
 #inputBar{
     align-self: flex-end;
     padding: 2%;
