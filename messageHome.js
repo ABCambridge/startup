@@ -4,6 +4,8 @@ const TEST_AUTH_TOKEN = "test_auth_token_1001";
 const TEST_USERNAME = "Andrew";
 const TEST_PASSWORD = "Cambridge";
 
+verifyAuth();
+
 let currentConversation = null;
 //"conversations" represents the different conversations that will be loaded in from the database
 const conversations = ["Jimmy","Joseph","Dave","Catherine","Stephanie","Emma","Erin"];
@@ -59,8 +61,6 @@ const messages = [
         user:"Erin"
     }
 ];
-
-verifyAuth();
 
 function verifyAuth(){
     const authtoken = localStorage.getItem(AUTH_KEY);
