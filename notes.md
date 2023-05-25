@@ -9,3 +9,5 @@
 [HTML notes](./HTML.md)
 
 [JavaScript notes](./JavaScript.md)
+
+[CSS notes](./css.md)
