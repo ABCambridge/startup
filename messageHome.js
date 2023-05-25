@@ -198,7 +198,7 @@ function logout(){
     localStorage.removeItem("username");
 
     //to be removed
-    localStorage.removeItem("messages");
+    //localStorage.removeItem("messages");
     //***
     
     window.location.href = "index.html";

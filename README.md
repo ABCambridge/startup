@@ -43,3 +43,9 @@ For this deliverable, I added the application styling in the following ways:
 * Application elements: Used consistent styling to indicate certain types of fields or elements. They are easily distinguishable from each other and make sense visually. All adapt to screen size.
 * Application text content: Font is consistent throughout. Most text uses a single font, while buttons have their own font.
 * Application images: Front image is flexible and its format responds to the width of the page. It is aligned in relation to the rest of its family elements.
+
+## JavaScript Deliverable
+For this deliverable, I added the functionality through JavaScript in the following ways:
+* Login: JS reads in the username and password provided and compares them to hardcoded credentials (this will be replaced with a validation call to the database). To successfully login, the username is "Andrew" and the password is "Cambridge." Each logout, these credentials must be used to get back in until the application is connected to the database. However, changing the username in the settings screen does change the temporary username in localstorage.
+* Database data: username and password and authtoken are compared to hard coded values that will eventually be coming from the database. Also, the messages that originally load into the converstations come from an array the represents what you would find in the database. Pulling these messages also includes when the user navigates back to the main message screen from the settings screen. Data does not persist between 
+* WebSocket: setInterval is used to send automated messages every 10 seconds in whatever conversation is being viewed at the time to represent messages that will be coming in. Sent messages are also displayed. Both received and sent are stored in the "database" in local memory so that messages persist after navigating between conversations and the settings screen. 
