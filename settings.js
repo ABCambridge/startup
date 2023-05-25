@@ -18,6 +18,7 @@ function submitChanges(){
     else{
         //place request to server, see if there is an issue with unique values. Otherwise, process request and login.
         localStorage.setItem("username",username);
+        localStorage.setItem("password",password);
         //hypothetically, a new authtoken would also be created and updated in local memory
         window.location.href = "messageHome.html";
     }
@@ -28,8 +29,8 @@ function fillFields(){
     document.getElementById("username").value = localStorage.getItem("username");
     //get password from database here, using the authentication token
     if(localStorage.getItem(AUTH_KEY) === TEST_AUTH_TOKEN){
-        document.getElementById("password").value = TEST_PASSWORD;
-        document.getElementById("confirmPassword").value = TEST_PASSWORD;
+        document.getElementById("password").value = localStorage.getItem("password");
+        document.getElementById("confirmPassword").value = localStorage.getItem("password");
     }
     else{
         alert("Authentication session failed.")

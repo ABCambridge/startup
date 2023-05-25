@@ -195,11 +195,6 @@ function sendMessage(){
 
 function logout(){
     localStorage.removeItem(AUTH_KEY);
-    localStorage.removeItem("username");
-
-    //to be removed
-    //localStorage.removeItem("messages");
-    //***
     
     window.location.href = "index.html";
 }
