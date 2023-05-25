@@ -5,6 +5,7 @@
         <link rel="stylesheet"href="stylesheet.css"/>
         <link rel="stylesheet"href="accountInfo.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="settings.js"></script>
     </head>
     <body>
         <header>
@@ -12,10 +13,10 @@
         </header>
         <main class="centeredContent">
             <h3>FastChat Settings</h3>
-            <div>
+            <!-- <div>
                 <label for="displayName">Display Name: </label>
                 <input type="text"class="inputLocation"id="displayName"name="displayNameText"placeholder="old display name"/>
-            </div>
+            </div> -->
             <div>
                 <label for="username">Username: </label>
                 <input type="text"class="inputLocation"id="username"name="usernameText"placeholder="old username"/>
@@ -29,9 +30,9 @@
                 <input type="text"class="inputLocation"id="confirmPassword"name="confirmPasswordText"placeholder="old password"/>
             </div>
             <div>
-                <form action="messageHome.html">
-                    <button type="submit"class="positiveButton">Submit changes to settings</button>
-                </form>
+                <div>
+                    <button type="submit"onclick="submitChanges()"class="positiveButton">Submit changes to settings</button>
+                </div>
             </div>
             <div>
                 <form action="messageHome.html">
@@ -39,6 +40,9 @@
                 </form>
             </div>
         </main>
+        <script>
+            fillFields();
+        </script>
         <footer>
             <a href="https://github.com/ABCambridge/startup.git">Andrew's GitHub for Startup</a>
             <p>Authored by Andrew Cambridge</p>
