@@ -14,7 +14,7 @@ const introMessage = {
     text:"This is the beginning of your conversation with ",
     type:"systemMessage"
 };
-const messages = [
+let messages = [
     {
         text:"hi there, how are you?",
         type:"incomingMessage",
@@ -74,6 +74,15 @@ function verifyAuth(){
     }
 }
 
+function initialMessageLoad(){
+    if(localStorage.getItem("messages") === null){
+        updateMessageStorage();
+    }
+    else{
+        messages = JSON.parse(localStorage.getItem("messages"));
+    }
+}
+
 function updateUserDisplay(){
     document.querySelector("#currentUser").textContent = "Logged in as " + localStorage.getItem("username");
 }
@@ -108,9 +117,11 @@ function loadMessages(){
     if(currentConversation !== null){
         const messageWindow = document.querySelector("#messages");
         removeChildrenNodes(messageWindow);
-        addStartingMessgae(messageWindow);
+        addStartingMessage(messageWindow);
 
-        messages.forEach((message) => {
+        let loadedMessages = JSON.parse(localStorage.getItem("messages"));
+
+        loadedMessages.forEach((message) => {
             if(message.user === currentConversation.textContent){
                 insertMessage(message,messageWindow);    
             }
@@ -131,9 +142,10 @@ function insertMessage(message,messageWindow){
     newMessage.setAttribute('class',`message ${message.type}`);
     newMessage.textContent = message.text;
     messageWindow.appendChild(newMessage);
+    updateMessageStorage();
 }
 
-function addStartingMessgae(messages){
+function addStartingMessage(messages){
     let sysMessage = document.createElement('span');
     sysMessage.setAttribute('class','message systemMessage');
     sysMessage.textContent = introMessage.text + currentConversation.textContent + '.';
@@ -151,8 +163,13 @@ function getIncomingMessages(){
             }
             messages.push(incomingMessage);//"adding" it to the database
             insertMessage(incomingMessage,document.querySelector("#messages"));
+            updateMessageStorage();
         }
     },10000);
+}
+
+function updateMessageStorage(){
+    localStorage.setItem("messages",JSON.stringify(messages));
 }
 
 function selectConversation(conversation){
@@ -171,6 +188,7 @@ function sendMessage(){
         }
         messages.push(outgoingMessage);//insert into database
         insertMessage(outgoingMessage,document.querySelector("#messages"));
+        updateMessageStorage();
         inputBox.value = "";
     }
 }
@@ -178,5 +196,10 @@ function sendMessage(){
 function logout(){
     localStorage.removeItem(AUTH_KEY);
     localStorage.removeItem("username");
+
+    //to be removed
+    localStorage.removeItem("messages");
+    //***
+    
     window.location.href = "index.html";
 }
