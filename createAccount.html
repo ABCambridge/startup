@@ -5,6 +5,7 @@
         <link rel="stylesheet"href="stylesheet.css"/>
         <link rel="stylesheet"href="accountInfo.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="createAccount.js"></script>
     </head>
     <body>
         <header>
@@ -13,10 +14,10 @@
         </header>
         <main class="centeredContent">
             <h3>Create New FastChat Account</h3>
-            <div>
+            <!-- <div>
                 <label for="displayName">Display Name: </label>
                 <input type="text"class="inputLocation"id="displayName"name="displayNameText"placeholder="name here"/>
-            </div>
+            </div> -->
             <div>
                 <label for="username">Username: </label>
                 <input type="text"class="inputLocation"id="username"name="usernameText"placeholder="username here"/>
@@ -30,9 +31,9 @@
                 <input type="text"class="inputLocation"id="confirmPassword"name="confirmPasswordText"placeholder="password here"/>
             </div>
             <div>
-                <form action="messageHome.html">
-                    <button type="submit"class="positiveButton">Create New Account</button>
-                </form>
+                <div>
+                    <button type="submit"onclick="createAccount()"class="positiveButton">Create New Account</button>
+                </div>
             </div>
             <div>
                 <form action="index.html">

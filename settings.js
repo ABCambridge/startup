@@ -16,7 +16,7 @@ function submitChanges(){
         alert("Passwords do not match. Please ensure they match");
     }
     else{
-        //place request to server, see if there is an issue with unique values. Otherwise, process request.
+        //place request to server, see if there is an issue with unique values. Otherwise, process request and login.
         localStorage.setItem("username",username);
         //hypothetically, a new authtoken would also be created and updated in local memory
         window.location.href = "messageHome.html";
