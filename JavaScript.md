@@ -45,3 +45,16 @@
 * \+ is one or more /a+b/
 * \. matches any single character except for line terminators
 * | is the alternative operator (as per usual)
+
+# JSON example
+Here is an example of a JSON document.
+
+{
+  "class": {
+    "title": "web programming",
+    "description": "Amazing"
+  },
+  "enrollment": ["Marco", "Jana", "فَاطِمَة"],
+  "start": "2025-02-01",
+  "end": null
+}
