@@ -25,7 +25,7 @@ function submitChanges(){
 
 function fillFields(){
     //WILL EVENTUALLY GATHER DATA FROM DATABASE
-    document.getElementById("username").value = TEST_USERNAME;
+    document.getElementById("username").value = localStorage.getItem("username");
     //get password from database here, using the authentication token
     if(localStorage.getItem(AUTH_KEY) === TEST_AUTH_TOKEN){
         document.getElementById("password").value = TEST_PASSWORD;
