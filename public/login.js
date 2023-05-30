@@ -23,6 +23,15 @@ function verifyAuthForLogin(){
     }
 }
 
+// async function insertQuote(){
+//     const link = "https://api.chucknorris.io/jokes/random";
+// fetch(link)
+//   .then((response) => response.json)
+//   .then((stringRes) => {
+//     document.querySelector("#quote").textContent = JSON.stringify(stringRes);
+// });
+// }
+
 preLoad();
 verifyAuthForLogin();
 
