@@ -1,38 +1,26 @@
 const AUTH_KEY = "authtoken";
-//TODO: remove this const
-const TEST_AUTH_TOKEN = "test_auth_token_1001";
-const TEST_USERNAME = "Andrew";
-const TEST_PASSWORD = "Cambridge";
-
-function preLoad(){
-    if(localStorage.getItem("username") === null){
-        localStorage.setItem("username",TEST_USERNAME);
-    }
-    if(localStorage.getItem("password") === null){
-        localStorage.setItem("password",TEST_PASSWORD);
-    }
-}
+const USERNAME_KEY = "username";
 
 async function verifyAuthForLogin(){
     const authtoken = localStorage.getItem(AUTH_KEY);
-    // let respJson = await response.json();
-    // console.log(respJson);
-    // console.log(respJson.message);
     if(authtoken !== null){
-        const response = await fetch (`/login/${authtoken}`,{
+        const response = await fetch (`/authorize/${authtoken}`,{
             method: 'GET',
             headers: {'content-type':'application/json'}
         });
         
         const authCheck = await response.json();
+
         if(!authCheck.success){
             localStorage.removeItem(AUTH_KEY);
+        }
+        else{
+            localStorage.setItem(USERNAME_KEY,authCheck.username)
         }
         window.location.href = authCheck.nextLink;
     }
 }
 
-preLoad();
 verifyAuthForLogin();
 
 function login(){
@@ -41,19 +29,25 @@ function login(){
     validateCredentials(username,password);
 }
 
-function validateCredentials(username,password){
+async function validateCredentials(username,password){
     if(username === "" || password === ""){
         alert("Please fill in both the username and password fields.");
     }
     else{
-        //THIS IS WHERE YOU CALL THE SERVER AND DETERMINE VALID LOGINS  (call another function)
-        if(username === localStorage.getItem("username") && password === localStorage.getItem("password")){
-            localStorage.setItem(AUTH_KEY,TEST_AUTH_TOKEN);
-            window.location.href = "messageHome.html";
+        const response = await fetch(`/login/${username}/${password}`,{
+            method: 'GET',
+            headers: {'content-type':'application/json'},
+        });
+
+        const loginResult = await response.json();
+
+        if(loginResult.success){
+            localStorage.setItem(AUTH_KEY,loginResult.authtoken);
+            localStorage.setItem(USERNAME_KEY,loginResult.username);
+            window.location.href = loginResult.nextLink;
         }
         else{
             alert("Invalid login credentials.");
         }
-        //END CODE REPLACEMENT BLOCK
     }
 }

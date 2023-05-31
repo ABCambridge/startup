@@ -4,7 +4,19 @@ const TEST_AUTH_TOKEN = "test_auth_token_1001";
 const TEST_USERNAME = "Andrew";
 const TEST_PASSWORD = "Cambridge";
 
-verifyAuth();
+function verifyAuthForMessages(){
+    const authtoken = localStorage.getItem(AUTH_KEY);
+    //TODO: verify authoken with the database. Reject if not found
+    if(authtoken !== TEST_AUTH_TOKEN){
+        window.location.href = "index.html";
+        alert("Session authentication failed.");
+    }
+    else{
+        
+    }
+}
+
+verifyAuthForMessages();
 
 let currentConversation = null;
 //"conversations" represents the different conversations that will be loaded in from the database
@@ -61,18 +73,6 @@ let messages = [
         user:"Erin"
     }
 ];
-
-function verifyAuth(){
-    const authtoken = localStorage.getItem(AUTH_KEY);
-    //TODO: verify authoken with the database. Reject if not found
-    if(authtoken !== TEST_AUTH_TOKEN){
-        window.location.href = "index.html";
-        alert("Session authentication failed.");
-    }
-    else{
-        
-    }
-}
 
 function initialMessageLoad(){
     if(localStorage.getItem("messages") === null){
