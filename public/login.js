@@ -15,29 +15,18 @@ function preLoad(){
 
 async function verifyAuthForLogin(){
     const authtoken = localStorage.getItem(AUTH_KEY);
-    const response = await fetch(`/login`,{
-        method: 'GET',
-        headers: {'content-type': 'application/json'}
-    });
-    let respJson = await response.json();
-    console.log(respJson);
-    console.log(respJson.message);
+    // let respJson = await response.json();
+    // console.log(respJson);
+    // console.log(respJson.message);
     if(authtoken !== null){
-        //VERIFY authtoken with server and get username if it is valid. Else, just go to index.html like normal
-        if(authtoken === TEST_AUTH_TOKEN){
-            window.location.href = "messageHome.html";
-        }
+        const response = await fetch (`/login/${authtoken}`,{
+            method: 'GET',
+            headers: {'content-type':'application/json'}
+        });
+        const authCheck = await response.json();
+        window.location.href = authCheck.nextLink;
     }
 }
-
-// async function insertQuote(){
-//     const link = "https://api.chucknorris.io/jokes/random";
-// fetch(link)
-//   .then((response) => response.json)
-//   .then((stringRes) => {
-//     document.querySelector("#quote").textContent = JSON.stringify(stringRes);
-// });
-// }
 
 preLoad();
 verifyAuthForLogin();
