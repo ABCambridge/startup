@@ -4,15 +4,20 @@ const TEST_AUTH_TOKEN = "test_auth_token_1001";
 const TEST_USERNAME = "Andrew";
 const TEST_PASSWORD = "Cambridge";
 
-function verifyAuthForMessages(){
+async function verifyAuthForMessages(){
     const authtoken = localStorage.getItem(AUTH_KEY);
-    //TODO: verify authoken with the database. Reject if not found
-    if(authtoken !== TEST_AUTH_TOKEN){
-        window.location.href = "index.html";
-        alert("Session authentication failed.");
-    }
-    else{
-        
+
+    const response = await fetch(`/authorize/${authtoken}`,{
+        method: 'GET',
+        headers: {'content-type':'application/json'}
+    });
+
+    const authCheck = await response.json();
+
+    if(!authCheck.success){
+        localStorage.removeItem(AUTH_KEY);
+        alert("Session authentication failed. Please login again.");
+        window.location.href = authCheck.nextLink;
     }
 }
 
