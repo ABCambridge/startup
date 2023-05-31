@@ -2,8 +2,8 @@ const AUTH_KEY = "authtoken";
 const USERNAME_KEY = "username";
 
 async function verifyAuthForLogin(){
-    const authtoken = localStorage.geItem(AUTH_KEY);
-    
+    const authtoken = localStorage.getItem(AUTH_KEY);
+
     if(authtoken !== null){
         const response = await fetch (`/authorize/${authtoken}`,{
             method: 'GET',

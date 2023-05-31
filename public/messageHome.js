@@ -1,8 +1,5 @@
 const AUTH_KEY = "authtoken";
-//TODO: remove this const
-const TEST_AUTH_TOKEN = "test_auth_token_1001";
-const TEST_USERNAME = "Andrew";
-const TEST_PASSWORD = "Cambridge";
+const MESSAGES_KEY = "messages";
 
 async function verifyAuthForMessages(){
     const authtoken = localStorage.getItem(AUTH_KEY);
@@ -24,72 +21,71 @@ async function verifyAuthForMessages(){
 verifyAuthForMessages();
 
 let currentConversation = null;
-//"conversations" represents the different conversations that will be loaded in from the database
-const conversations = ["Jimmy","Joseph","Dave","Catherine","Stephanie","Emma","Erin"];
-//"messages" represents the conversations that would be loaded in from the database based on which conversation is opened
+let conversations = null;
+let messages = null;
+
+
+async function retrieveData(){
+    const response = await fetch('/conversations',{
+        method: 'GET',
+        headers: {'content-type':'application/json'}
+    });
+
+    const conversationData = await response.json();
+
+    if(conversationData.success){
+        conversations = conversationData.conversations;
+    }
+    else{
+        alert('An error occured while retrieving conversation data');
+    }
+
+    loadConversations();
+}
+
+function loadConversations(){
+    const convoList = document.querySelector("#conversations");
+    conversations.forEach((a) => {
+        let convoItem = document.createElement('span');
+        convoItem.setAttribute('class','conversation');
+        convoItem.setAttribute('onclick','selectConversation(this)');
+        convoItem.textContent = a;
+        convoList.appendChild(convoItem);
+    });
+}
+
 const introMessage = {
     text:"This is the beginning of your conversation with ",
     type:"systemMessage"
 };
-let messages = [
-    {
-        text:"hi there, how are you?",
-        type:"incomingMessage",
-        user:"Jimmy"
-    },
-    {
-        text:"I am doing well, how about yourself?",
-        type:"outgoingMessage",
-        user:"Jimmy"
-    },
-    {
-        text:"what's up?",
-        type:"incomingMessage",
-        user:"Joseph"
-    },
-    {
-        text:"hey Emma, how are you doing?",
-        type:"outgoingMessage",
-        user:"Emma"
-    },
-    {
-        text:"I'm good",
-        type:"incomingMessage",
-        user:"Emma"
-    },
-    {
-        text:"hey Stephanie, how are you doing?",
-        type:"outgoingMessage",
-        user:"Stephanie"
-    },
-    {
-        text:"cool",
-        type:"incomingMessage",
-        user:"Stephanie"
-    },
-    {
-        text:"I won the lottery!",
-        type:"outgoingMessage",
-        user:"Erin"
-    },
-    {
-        text:"nice!",
-        type:"incomingMessage",
-        user:"Erin"
-    }
-];
 
-function initialMessageLoad(){
-    if(localStorage.getItem("messages") === null){
-        updateMessageStorage();
+async function initialMessageLoad(){
+    localStorage.removeItem(MESSAGES_KEY);
+
+    const response = await fetch('/messages',{
+        method: 'GET',
+        headers: {'content-type':'application/json'}
+    });
+
+    const messageData = await response.json();
+
+    if(messageData.success){
+        messages = messageData.messages;
+        localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
     }
     else{
-        messages = JSON.parse(localStorage.getItem("messages"));
+        alert('An error occured while retrieving message data');
     }
 }
 
 function updateUserDisplay(){
     document.querySelector("#currentUser").textContent = "Logged in as " + localStorage.getItem("username");
+}
+
+function selectConversation(conversation){
+    currentConversation = conversation;
+    updateConversationHeader();
+    loadMessages();
 }
 
 function updateConversationHeader(){
@@ -104,17 +100,6 @@ function updateConversationHeader(){
     document.querySelector("#conversationTitle").textContent = title;
 }
 
-function loadConversations(){
-    const convoList = document.querySelector("#conversations");
-    conversations.forEach((a) => {
-        let convoItem = document.createElement('span');
-        convoItem.setAttribute('class','conversation');
-        convoItem.setAttribute('onclick','selectConversation(this)');
-        convoItem.textContent = a;
-        convoList.appendChild(convoItem);
-    });
-}
-
 let acceptMessages = false;
 
 function loadMessages(){
@@ -124,7 +109,7 @@ function loadMessages(){
         removeChildrenNodes(messageWindow);
         addStartingMessage(messageWindow);
 
-        let loadedMessages = JSON.parse(localStorage.getItem("messages"));
+        let loadedMessages = JSON.parse(localStorage.getItem(MESSAGES_KEY));
 
         loadedMessages.forEach((message) => {
             if(message.user === currentConversation.textContent){
@@ -142,6 +127,13 @@ function removeChildrenNodes(parent){
     }
 }
 
+function addStartingMessage(messages){
+    let sysMessage = document.createElement('span');
+    sysMessage.setAttribute('class','message systemMessage');
+    sysMessage.textContent = introMessage.text + currentConversation.textContent + '.';
+    messages.appendChild(sysMessage);
+}
+
 function insertMessage(message,messageWindow){
     let newMessage = document.createElement('span');
     newMessage.setAttribute('class',`message ${message.type}`);
@@ -150,12 +142,6 @@ function insertMessage(message,messageWindow){
     updateMessageStorage();
 }
 
-function addStartingMessage(messages){
-    let sysMessage = document.createElement('span');
-    sysMessage.setAttribute('class','message systemMessage');
-    sysMessage.textContent = introMessage.text + currentConversation.textContent + '.';
-    messages.appendChild(sysMessage);
-}
 
 function getIncomingMessages(){
     // represents the function that will receive and load the incoming messages from the web socket
@@ -177,11 +163,6 @@ function updateMessageStorage(){
     localStorage.setItem("messages",JSON.stringify(messages));
 }
 
-function selectConversation(conversation){
-    currentConversation = conversation;
-    updateConversationHeader();
-    loadMessages();
-}
 
 function sendMessage(){
     if(acceptMessages && currentConversation !== null){
