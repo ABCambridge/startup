@@ -23,7 +23,11 @@ async function verifyAuthForLogin(){
             method: 'GET',
             headers: {'content-type':'application/json'}
         });
+        
         const authCheck = await response.json();
+        if(!authCheck.success){
+            localStorage.removeItem(AUTH_KEY);
+        }
         window.location.href = authCheck.nextLink;
     }
 }

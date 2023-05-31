@@ -12,16 +12,18 @@ const TEST_PASSWORD = "Cambridge";
 app.get('/login/:authtoken',(req,res) => {
     let nextLink;
     let success;
-    if(req.params.authtoken === TEST_AUTH_TOKEN){
+    let username;
+    if(req.params.authtoken === TEST_AUTH_TOKEN){//TODO: this is where you check with the database about the authtoken
         nextLink = 'messageHome.html';
         success = true;
+        username = TEST_USERNAME;//This should become the username in the database
     }
     else{
         nextLink = 'index.html';
         success = false;
     }
 
-    res.send({'success':success,'nextLink':nextLink});
+    res.send({'success':success,'nextLink':nextLink,'username':username});
 });
 
 const port = 4000;
