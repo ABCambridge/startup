@@ -13,8 +13,15 @@ function preLoad(){
     }
 }
 
-function verifyAuthForLogin(){
+async function verifyAuthForLogin(){
     const authtoken = localStorage.getItem(AUTH_KEY);
+    const response = await fetch(`/login`,{
+        method: 'GET',
+        headers: {'content-type': 'application/json'}
+    });
+    let respJson = await response.json();
+    console.log(respJson);
+    console.log(respJson.message);
     if(authtoken !== null){
         //VERIFY authtoken with server and get username if it is valid. Else, just go to index.html like normal
         if(authtoken === TEST_AUTH_TOKEN){
