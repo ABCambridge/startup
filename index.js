@@ -13,51 +13,57 @@ const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";
 
 let conversations = ["Jimmy","Joseph","Dave","Catherine","Stephanie","Emma","Erin"];
+let users = [
+    {
+        username:"Andrew",
+        password:"Cambridge"
+    }
+];
 let messages = [
     {
         text:"hi there, how are you?",
-        type:"incomingMessage",
-        user:"Jimmy"
+        sender:"Jimmy",
+        recipient:"Andrew"
     },
     {
         text:"I am doing well, how about yourself?",
-        type:"outgoingMessage",
-        user:"Jimmy"
+        sender:"Andrew",
+        recipient:"Jimmy"
     },
     {
         text:"what's up?",
-        type:"incomingMessage",
-        user:"Joseph"
+        sender:"Joseph",
+        recipient:"Andrew"
     },
     {
         text:"hey Emma, how are you doing?",
-        type:"outgoingMessage",
-        user:"Emma"
+        sender:"Andrew",
+        recipient:"Emma"
     },
     {
         text:"I'm good",
-        type:"incomingMessage",
-        user:"Emma"
+        sender:"Emma",
+        recipient:"Andrew"
     },
     {
         text:"hey Stephanie, how are you doing?",
-        type:"outgoingMessage",
-        user:"Stephanie"
+        sender:"Andrew",
+        recipient:"Stephanie"
     },
     {
         text:"cool",
-        type:"incomingMessage",
-        user:"Stephanie"
+        sender:"Stephanie",
+        recipient:"Andrew"
     },
     {
         text:"I won the lottery!",
-        type:"outgoingMessage",
-        user:"Erin"
+        sender:"Andrew",
+        recipient:"Erin"
     },
     {
         text:"nice!",
-        type:"incomingMessage",
-        user:"Erin"
+        sender:"Erin",
+        recipient:"Andrew"
     }
 ];
 
@@ -108,14 +114,23 @@ app.get('/conversations',(req,res) => {
     });//success will only not be true if there is an error accessing the database
 });
 
-app.get('/messages',(req,res) => {
+app.get('/messages/:username',(req,res) => {
+    //TODO: req.params.username should be used to determine
+        //which user you are getting the messages for.
     res.send({
         "success":true,
         "messages":messages
     });
 });
 
+app.put('/messages',(req,res) => {
+    messages.push(req.body);
+    console.log(req.body);
+    res.send({"success":true});
+});
+
 const port = 4000;
 app.listen(port,function (){ 
     console.log(`Listening on port ${port}`);
+    console.log(messages);
 });

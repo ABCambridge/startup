@@ -1,5 +1,8 @@
 const AUTH_KEY = "authtoken";
+const USERNAME_KEY = "username";
 const MESSAGES_KEY = "messages";
+const OUTGOING_MESSAGE = "outgoingMessage";
+const INCOMING_MESSAGE = "incomingMessage";
 
 async function verifyAuthForMessages(){
     const authtoken = localStorage.getItem(AUTH_KEY);
@@ -62,7 +65,7 @@ const introMessage = {
 async function initialMessageLoad(){
     localStorage.removeItem(MESSAGES_KEY);
 
-    const response = await fetch('/messages',{
+    const response = await fetch(`/messages/${localStorage.getItem(USERNAME_KEY)}`,{
         method: 'GET',
         headers: {'content-type':'application/json'}
     });
@@ -71,10 +74,25 @@ async function initialMessageLoad(){
 
     if(messageData.success){
         messages = messageData.messages;
+        addMessageTypes();
         localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
     }
     else{
         alert('An error occured while retrieving message data');
+    }
+}
+
+function addMessageTypes(){
+    if(messages !== null){
+        let user = localStorage.getItem(USERNAME_KEY);
+        messages.forEach((m) => {
+            if(m.sender === user){
+                m.type = OUTGOING_MESSAGE;
+            }
+            else if(m.recipient === user){
+                m.type = INCOMING_MESSAGE;
+            }
+        });
     }
 }
 
@@ -103,7 +121,6 @@ function updateConversationHeader(){
 let acceptMessages = false;
 
 function loadMessages(){
-    //THIS would normally get all of the conversations from the database connected to the current user and selected conversation
     if(currentConversation !== null){
         const messageWindow = document.querySelector("#messages");
         removeChildrenNodes(messageWindow);
@@ -112,7 +129,8 @@ function loadMessages(){
         let loadedMessages = JSON.parse(localStorage.getItem(MESSAGES_KEY));
 
         loadedMessages.forEach((message) => {
-            if(message.user === currentConversation.textContent){
+            let otherPerson = currentConversation.textContent;
+            if(message.sender === otherPerson || message.recipient === otherPerson){
                 insertMessage(message,messageWindow);    
             }
         });
@@ -139,9 +157,7 @@ function insertMessage(message,messageWindow){
     newMessage.setAttribute('class',`message ${message.type}`);
     newMessage.textContent = message.text;
     messageWindow.appendChild(newMessage);
-    updateMessageStorage();
 }
-
 
 function getIncomingMessages(){
     // represents the function that will receive and load the incoming messages from the web socket
@@ -149,38 +165,49 @@ function getIncomingMessages(){
         if(acceptMessages && currentConversation !== null){
             let incomingMessage = {
                 text: "Man, CS260 is such a cool class!",
-                type: "incomingMessage",
-                user: currentConversation.textContent
+                type: INCOMING_MESSAGE,
+                sender: currentConversation.textContent,
+                recipient: localStorage.getItem(USERNAME_KEY)
             }
-            messages.push(incomingMessage);//"adding" it to the database
+            updateMessageStorage(incomingMessage);
             insertMessage(incomingMessage,document.querySelector("#messages"));
-            updateMessageStorage();
         }
     },10000);
 }
-
-function updateMessageStorage(){
-    localStorage.setItem("messages",JSON.stringify(messages));
-}
-
 
 function sendMessage(){
     if(acceptMessages && currentConversation !== null){
         const inputBox = document.querySelector("#messageBox");
         let outgoingMessage = {
             text: inputBox.value,
-            type: "outgoingMessage",
-            user: currentConversation.textContent
+            type: OUTGOING_MESSAGE,
+            sender: localStorage.getItem(USERNAME_KEY),
+            recipient: currentConversation.textContent
         }
-        messages.push(outgoingMessage);//insert into database
+        updateMessageStorage(outgoingMessage);
         insertMessage(outgoingMessage,document.querySelector("#messages"));
-        updateMessageStorage();
         inputBox.value = "";
+    }
+}
+
+async function updateMessageStorage(newMessage){
+    messages.push(newMessage);
+    localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
+    const response = await fetch('/messages',{
+        method: 'PUT',
+        headers: {'content-type':'application/json'},
+        body: JSON.stringify(newMessage)
+    });
+
+    const updateResponse = await response.json();
+
+    if(!updateResponse.success){
+        alert('An error occured in updating messaging data. Info may be lost');
     }
 }
 
 function logout(){
     localStorage.removeItem(AUTH_KEY);
-    
+    localStorage.removeItem(MESSAGES_KEY);
     window.location.href = "index.html";
 }
