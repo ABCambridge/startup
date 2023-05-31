@@ -15,8 +15,8 @@ async function verifyAuthForMessages(){
     const authCheck = await response.json();
 
     if(!authCheck.success){
-        localStorage.removeItem(AUTH_KEY);
         alert("Session authentication failed. Please login again.");
+        localStorage.removeItem(AUTH_KEY);
         window.location.href = authCheck.nextLink;
     }
 }
