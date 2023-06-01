@@ -1,39 +1,51 @@
 const AUTH_KEY = "authtoken";
-//TODO: remove this const
-const TEST_AUTH_TOKEN = "test_auth_token_1001";
-const TEST_USERNAME = "Andrew";
-const TEST_PASSWORD = "Cambridge";
+const USERNAME_KEY = "username";
 
-function submitChanges(){
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+async function submitChanges(){
+    let newUsername = document.getElementById("username").value;
+    let newPassword = document.getElementById("password").value;
     let confirmPassword = document.getElementById("confirmPassword").value;
 
-    if(username === "" || password === "" || confirmPassword === ""){
+    if(newUsername === "" || newPassword === "" || confirmPassword === ""){
         alert("Please fill in all fields.");
     }
-    else if(password !== confirmPassword){
+    else if(newPassword !== confirmPassword){
         alert("Passwords do not match. Please ensure they match");
     }
     else{
-        //place request to server, see if there is an issue with unique values. Otherwise, process request and login.
-        localStorage.setItem("username",username);
-        localStorage.setItem("password",password);
-        //hypothetically, a new authtoken would also be created and updated in local memory
-        window.location.href = "messageHome.html";
+        let updatedUser = {
+            "oldUsername":localStorage.getItem(USERNAME_KEY),
+            "newUsername":newUsername,
+            "newPassword":newPassword
+        }
+
+        const response = await fetch("/user",{
+            method: 'PUT',
+            headers: {'content-type':'application/json'},
+            body:JSON.stringify(updatedUser)
+        });
+
+        const result = await response.json();
+
+        if(result.success){
+            localStorage.setItem(USERNAME_KEY,result.username);
+            localStorage.setItem(AUTH_KEY,result.authtoken);
+            window.location.href = response.nextLink;
+        }
+        else{
+            alert(result.message);
+        }
     }
 }
 
-function fillFields(){
-    //WILL EVENTUALLY GATHER DATA FROM DATABASE
-    document.getElementById("username").value = localStorage.getItem("username");
-    //get password from database here, using the authentication token
-    if(localStorage.getItem(AUTH_KEY) === TEST_AUTH_TOKEN){
-        document.getElementById("password").value = localStorage.getItem("password");
-        document.getElementById("confirmPassword").value = localStorage.getItem("password");
-    }
-    else{
+async function fillFields(){
+    const response = await fetch(`/authorize/${localStorage.getItem(AUTH_KEY)}`);
+    const result = await response.json();
+
+    if(!result.success){
         alert("Authentication session failed.")
-        window.location.href = "index.html";
+        window.location.href = result.nextLink;
     }
+
+    document.getElementById("username").value = localStorage.getItem(USERNAME_KEY);
 }

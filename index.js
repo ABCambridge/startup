@@ -5,10 +5,6 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
-
-const TEST_AUTH_TOKEN = "test_auth_token_1001";
-const TEST_USERNAME = "Andrew";
-const TEST_PASSWORD = "Cambridge";
 const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";
 
@@ -180,6 +176,48 @@ app.put('/messages',(req,res) => {
     messages.push(req.body);
     console.log(req.body);
     res.send({"success":true});
+});
+
+app.put('/user',(req,res) => {
+    let updatedUser = req.body;
+    console.log(req.body);
+
+    let oldUser;
+    let unique = true;
+    let found = false;
+    let message;
+    users.forEach((user) => {
+        if(user.username === updatedUser.oldUsername){
+            oldUser = user;
+            found = true;
+        }
+        else{
+            if(user.username === updatedUser.newUsername){
+                unique = false;
+                message = "non-unique username submitted";
+            }
+            else if(user.password === updatedUser.newPassword){
+                unique = false;
+                message = "non-unique password submitted";
+            }
+        }
+    });
+
+    let success = false;
+    if(found && unique){
+        oldUser.username = updatedUser.newUsername;
+        oldUser.password = updatedUser.newPassword;
+        oldUser.authtoken = updatedUser.newUsername + "_token";
+        success = true;
+    }
+
+    res.send({
+        "success":success,
+        "username":oldUser?.username,
+        "authtoken":oldUser?.authtoken,
+        "message":message,
+        "nextLink":MESSAGE_HOME
+    });
 });
 
 const port = 4000;
