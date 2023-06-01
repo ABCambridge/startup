@@ -15,35 +15,43 @@ const MESSAGE_HOME = "messageHome.html";
 let users = [
     {
         username:"Andrew",
-        password:"Cambridge"
+        password:"Cambridge",
+        authtoken:"Andrew_token"
     },
     {
         username:"Jimmy",
-        password:"Jimmy"
+        password:"Jimmy",
+        authtoken:"Jimmy_token"
     },
     {
         username:"Joseph",
-        password:"Joseph"
+        password:"Joseph",
+        authtoken:"Joseph_token"
     },
     {
         username:"David",
-        password:"David"
+        password:"David",
+        authtoken:"David_token"
     },
     {
         username:"Catherine",
-        password:"Catherine"
+        password:"Catherine",
+        authtoken:"Catherine_token"
     },
     {
         username:"Stephanie",
-        password:"Stephanie"
+        password:"Stephanie",
+        authtoken:"Stephanie_token"
     },
     {
         username:"Emma",
-        password:"Emma"
+        password:"Emma",
+        authtoken:"Emma_token"
     },
     {
         username:"Erin",
-        password:"Erin"
+        password:"Erin",
+        authtoken:"Erin_token"
     }
 ];
 let messages = [
@@ -96,35 +104,41 @@ let messages = [
 
 app.get('/authorize/:authtoken',(req,res) => {
     let nextLink;
-    let success;
+    let success = false;
     let username;
-    if(req.params.authtoken === TEST_AUTH_TOKEN){//TODO: this is where you check with the database about the authtoken (separate function)
+
+    users.forEach((user) => {
+        if(user.authtoken === req.params.authtoken){
+            success = true;
+            username = user.username;
+        }
+    });
+
+    if(success){
         nextLink = MESSAGE_HOME;
-        success = true;
-        username = TEST_USERNAME;//This should become the username in the database
     }
     else{
         nextLink = INDEX_HTML;
-        success = false;
     }
 
     res.send({'success':success,'nextLink':nextLink,'username':username});
 });
 
 app.get('/login/:username/:password',(req,res) => {
-    let success = true;
-    if(req.params.username !== TEST_USERNAME){
-        success = false;
-    }
-    if(req.params.password !== TEST_PASSWORD){
-        success = false;
-    }
+    let success = false;
+    let authtoken;
+    users.forEach((user) => {
+        if(req.params.username === user.username){
+            if(req.params.password === user.password){
+                success = true;
+                authtoken = user.authtoken;
+            }
+        }
+    });
 
     let nextLink;
-    let authtoken;
     if(success){
         nextLink = MESSAGE_HOME;
-        authtoken = TEST_AUTH_TOKEN;
     }
 
     res.send({
@@ -149,11 +163,16 @@ app.get('/conversations/:username',(req,res) => {
 });
 
 app.get('/messages/:username',(req,res) => {
-    //TODO: req.params.username should be used to determine
-        //which user you are getting the messages for.
+    let personalMessages = [];
+    messages.forEach((message) => {
+        if(message.recipient === req.params.username || message.sender === req.params.username){
+            personalMessages.push(message);
+        }
+    });
+
     res.send({
         "success":true,
-        "messages":messages
+        "messages":personalMessages
     });
 });
 
