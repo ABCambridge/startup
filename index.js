@@ -266,8 +266,8 @@ app.post('/user',(req,res) => {
 
     res.send({
         "success":success,
-        "username":createdUser.username,
-        "authtoken":createdUser.authtoken,
+        "username":createdUser?.username,
+        "authtoken":createdUser?.authtoken,
         "message":message,
         "nextLink":MESSAGE_HOME
     });
