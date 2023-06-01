@@ -174,13 +174,11 @@ app.get('/messages/:username',(req,res) => {
 
 app.put('/messages',(req,res) => {
     messages.push(req.body);
-    console.log(req.body);
     res.send({"success":true});
 });
 
 app.put('/user',(req,res) => {
     let updatedUser = req.body;
-    console.log(req.body);
 
     let oldUser;
     let unique = true;
@@ -220,8 +218,45 @@ app.put('/user',(req,res) => {
     });
 });
 
+app.post('/user',(req,res) => {
+    let newUser = req.body;
+
+    let unique = true;
+    let message;
+
+    users.forEach((user) => {
+        if(user.username === newUser.newUsername){
+            unique = false;
+            message = "non-unique username submitted";
+        }
+        else if(user.password === newUser.newPassword){
+            unique = false;
+            message = "non-unique password submitted";
+        }
+    });
+
+    let success = false;
+    let createdUser;
+    if(unique){
+        createdUser = {
+            "username":newUser.newUsername,
+            "password":newUser.newPassword,
+            "authtoken":newUser.newUsername + "_token"
+        }
+        users.push(createdUser);
+        success = true;
+    }
+
+    res.send({
+        "success":success,
+        "username":createdUser.username,
+        "authtoken":createdUser.authtoken,
+        "message":message,
+        "nextLink":MESSAGE_HOME
+    });
+});
+
 const port = 4000;
 app.listen(port,function (){ 
     console.log(`Listening on port ${port}`);
-    console.log(messages);
 });

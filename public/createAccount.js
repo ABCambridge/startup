@@ -1,21 +1,36 @@
 const AUTH_KEY = "authtoken";
-const TEST_AUTH_TOKEN = "test_auth_token_1001";
-function createAccount(){
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+const USERNAME_KEY = "username";
+async function createAccount(){
+    let newUsername = document.getElementById("username").value;
+    let newPassword = document.getElementById("password").value;
     let confirmPassword = document.getElementById("confirmPassword").value;
-    if(username === "" || password === "" || confirmPassword === ""){
+    if(newUsername === "" || newPassword === "" || confirmPassword === ""){
         alert("Please fill in all fields.");
     }
-    else if(password !== confirmPassword){
+    else if(newPassword !== confirmPassword){
         alert("Passwords do not match. Please ensure they match");
     }
     else{
-        //place request to server, see if there is an issue with unique values. Otherwise, process request and login.
-        localStorage.setItem("username",username);
-        localStorage.setItem("password",password);
-        localStorage.setItem(AUTH_KEY,TEST_AUTH_TOKEN);
-        //hypothetically, a new authtoken would also be created and updated in local memory
-        window.location.href = "messageHome.html";
+        let newUser = {
+            "newUsername":newUsername,
+            "newPassword":newPassword
+        }
+
+        const response = await fetch('/user',{
+            method: 'POST',
+            headers: {'content-type':'application/json'},
+            body:JSON.stringify(newUser)
+        });
+
+        const result = await response.json();
+
+        if(result.success){
+            localStorage.setItem(USERNAME_KEY,result.username);
+            localStorage.setItem(AUTH_KEY,result.authtoken);
+            window.location.href = result.nextLink;
+        }
+        else{
+            alert(result.message);
+        }
     }
 }
