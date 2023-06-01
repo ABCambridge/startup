@@ -1,9 +1,12 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const uuid = require('uuid');
+
 const app = express();
 
 app.use(express.json());
 app.use(express.static('public'));
+app.use(cookieParser());
 
 const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";

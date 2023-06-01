@@ -1,12 +1,13 @@
 {
   "dependencies": {
-    "express": "^4.18.2"
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
   },
   "name": "startup",
   "description": "[notes reference file](./notes.md)\r # Startup Assignment\r ## Elevator Pitch\r FastChat is a web application that allows for instant messaging between profiles, including group chats. It's free, updates messages instantly, and can be used from anywhere because it is based out of a browser. Users can get their accounts for free, customize their display name, and contact any other user on the platform. Conversations persist between sessions and users can easily see their conversations on their side panel.\r ## Features\r * Main messaging window: displays messages in the current conversation and allows new messages to be recieved and sent. Also contains the chats panel.\r     * Chats panel: side panel listing other users that the current user can chat with.\r     * Main messaging window contains options to log-out or access settings\r * Login window: allows the user to login in order to access their messages or provides functionality to create a new account.\r     * Login window contains link to the account creation page.\r     * Also displays an inspirational quote on the Login window.\r * Account Creation Page: lets the user set their display name, login username, and login password.\r     * Account Creation Page contains a back link to the login page\r * Settings page: allows users to edit their display name and login credentials.\r     * Settings page contains a link back to the main messaging window\r ## Technologies\r * HTML: Structure of the side panel, login window, and chat window will all be in HTML.\r * CSS: Styling of all the windows, including colors and animation of sending/receiving messages, and appearance of side panel will be accomplished using CSS.\r * JavaScript: Used to manage and manipulate the CSS, access and edit HTML elements, and display data received from Web Sockets. JavaScript will also access third party services for the quote of the day.\r * Web Service Calls: Displays an inspirational quote on the login screen by calling a third party quote service.\r * Web Service Provision: Provides services with back and forth contact with the server and allowing the user to access the FastChat application Calls the server that provides data about what other running instances of the web application.\r * Authentication: Users create an account and then use their account to login each time they access the web application.\r * Database Persistence: Login info, chats (recipients, titles), and messages persist accross each web app session by being stored in a cloud database and accessed by the web application.\r * Web Sockets: Used to render realtime reception and sending of messages while the user is using the application. Also used to access the quote of the day for the login page.\r ## Design Draft\r ![FastChat design](./FastChat_design.jpg)",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
