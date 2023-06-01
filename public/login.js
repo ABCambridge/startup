@@ -25,15 +25,14 @@ async function verifyAuthForLogin(){
 verifyAuthForLogin();
 
 async function getQuote(){
-    const response = await fetch('/quote',{
-        method: 'GET',
-        headers: {'content-type':'application/json'}
+    const response = await fetch('https://api.goprogram.ai/inspiration',{
+        method: 'GET'
     });
 
     const result = await response.json();
 
-    document.getElementById("quote").textContent = result.quote[0].q;
-    document.getElementById("author").textContent = result.quote[0].a;
+    document.getElementById("quote").textContent = result.quote;
+    document.getElementById("author").textContent = result.author;
 }
 
 function login(){
