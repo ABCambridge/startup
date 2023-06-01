@@ -30,7 +30,7 @@ async function submitChanges(){
         if(result.success){
             localStorage.setItem(USERNAME_KEY,result.username);
             localStorage.setItem(AUTH_KEY,result.authtoken);
-            window.location.href = response.nextLink;
+            window.location.href = result.nextLink;
         }
         else{
             alert(result.message);
