@@ -7,6 +7,23 @@ app.use(express.static('public'));
 
 const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";
+let quote;
+
+function setQuote(){
+    fetch('https://zenquotes.io/api/random')
+        .then((result) => result.json())
+        .then((json) => {quote = json;});
+}
+
+setQuote();
+
+function quoteRenew(){
+    setInterval(() => {
+        setQuote();
+    }, 5000);
+}
+
+quoteRenew();
 
 let users = [
     {
@@ -253,6 +270,13 @@ app.post('/user',(req,res) => {
         "authtoken":createdUser.authtoken,
         "message":message,
         "nextLink":MESSAGE_HOME
+    });
+});
+
+app.get('/quote',(req,res) => {
+    res.send({
+        "success":true,
+        "quote":quote
     });
 });
 

@@ -24,6 +24,18 @@ async function verifyAuthForLogin(){
 
 verifyAuthForLogin();
 
+async function getQuote(){
+    const response = await fetch('/quote',{
+        method: 'GET',
+        headers: {'content-type':'application/json'}
+    });
+
+    const result = await response.json();
+
+    document.getElementById("quote").textContent = result.quote[0].q;
+    document.getElementById("author").textContent = result.quote[0].a;
+}
+
 function login(){
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
