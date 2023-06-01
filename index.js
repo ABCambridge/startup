@@ -12,11 +12,38 @@ const TEST_PASSWORD = "Cambridge";
 const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";
 
-let conversations = ["Jimmy","Joseph","Dave","Catherine","Stephanie","Emma","Erin"];
 let users = [
     {
         username:"Andrew",
         password:"Cambridge"
+    },
+    {
+        username:"Jimmy",
+        password:"Jimmy"
+    },
+    {
+        username:"Joseph",
+        password:"Joseph"
+    },
+    {
+        username:"David",
+        password:"David"
+    },
+    {
+        username:"Catherine",
+        password:"Catherine"
+    },
+    {
+        username:"Stephanie",
+        password:"Stephanie"
+    },
+    {
+        username:"Emma",
+        password:"Emma"
+    },
+    {
+        username:"Erin",
+        password:"Erin"
     }
 ];
 let messages = [
@@ -107,7 +134,14 @@ app.get('/login/:username/:password',(req,res) => {
         'username':req.params.username})
 });
 
-app.get('/conversations',(req,res) => {
+app.get('/conversations/:username',(req,res) => {
+    let conversations = [];
+    users.forEach((user) => {
+        if(user.username !== req.params.username){
+            conversations.push(user.username);
+        }
+    });
+
     res.send({
         "success":true,
         "conversations":conversations

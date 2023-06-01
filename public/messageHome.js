@@ -29,7 +29,7 @@ let messages = null;
 
 
 async function retrieveData(){
-    const response = await fetch('/conversations',{
+    const response = await fetch(`/conversations/${localStorage.getItem(USERNAME_KEY)}`,{
         method: 'GET',
         headers: {'content-type':'application/json'}
     });
