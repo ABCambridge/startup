@@ -1,5 +1,5 @@
 const express = require('express');
-//example also requires 'cookie-parser'
+const cookieParser = require('cookie-parser');
 const app = express();
 
 app.use(express.json());
