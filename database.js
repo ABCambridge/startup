@@ -55,7 +55,19 @@ async function getUserList(){
 async function checkCredentials(checkUsername, checkPassword){
     const query = {$or: [{username: checkUsername},{password: checkPassword}]};
     const cursor = users.find(query);
-    return (await cursor.toArray()).length;//TODO make sure this doesn't need "()"
+    return (await cursor.toArray()).length;
 }
 
-module.exports = {getMessages, putMessage, addUser, updateUser, getUserList, checkCredentials};
+async function validateCredentials(checkUsername){
+    const query = {username: checkUsername};
+    const cursor = await users.findOne(query);
+    return cursor;
+}
+
+async function findByAuthtoken(checkAuthtoken){
+    const query = {authtoken: checkAuthtoken};
+    const cursor = await users.findOne(query);
+    return cursor;
+}
+
+module.exports = {getMessages, putMessage, addUser, updateUser, getUserList, validateCredentials, findByAuthtoken};

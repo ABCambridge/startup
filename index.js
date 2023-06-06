@@ -107,45 +107,50 @@ app.get('/authorize/:authtoken',(req,res) => {
     let success = false;
     let username;
 
-    users.forEach((user) => {
-        if(user.authtoken === req.params.authtoken){
+    let result = database.findByAuthtoken(req.params.authtoken);
+
+    result.then((data) => {
+        if(data !== null){
             success = true;
-            username = user.username;
+            username = data.username;
+            nextLink = MESSAGE_HOME;
         }
+        else{
+            nextLink = INDEX_HTML;
+        }
+
+        res.send({
+            'success':success,
+            'nextLink':nextLink,
+            'username':username
+        });
     });
 
-    if(success){
-        nextLink = MESSAGE_HOME;
-    }
-    else{
-        nextLink = INDEX_HTML;
-    }
-
-    res.send({'success':success,'nextLink':nextLink,'username':username});
 });
 
 app.get('/login/:username/:password',(req,res) => {
     let success = false;
     let authtoken;
-    users.forEach((user) => {
-        if(req.params.username === user.username){
-            if(req.params.password === user.password){
+    let nextLink;
+
+    let result = database.validateCredentials(req.params.username);
+
+    result.then((data) => {
+        if(data !== null ){
+            if(data.password === req.params.password){
                 success = true;
-                authtoken = user.authtoken;
+                authtoken = data.authtoken;
+                nextLink = MESSAGE_HOME;
             }
         }
+        res.send({
+            'success':success,
+            'nextLink':nextLink,
+            'authtoken':authtoken,
+            'username':req.params.username
+        });
     });
 
-    let nextLink;
-    if(success){
-        nextLink = MESSAGE_HOME;
-    }
-
-    res.send({
-        'success':success,
-        'nextLink':nextLink,
-        'authtoken':authtoken,
-        'username':req.params.username})
 });
 
 app.get('/conversations/:username',(req,res) => {
