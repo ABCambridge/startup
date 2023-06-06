@@ -12,96 +12,6 @@ app.use(cookieParser());
 const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";
 
-let users = [
-    {
-        username:"Andrew",
-        password:"Cambridge",
-        authtoken:"Andrew_token"
-    },
-    {
-        username:"Jimmy",
-        password:"Jimmy",
-        authtoken:"Jimmy_token"
-    },
-    {
-        username:"Joseph",
-        password:"Joseph",
-        authtoken:"Joseph_token"
-    },
-    {
-        username:"David",
-        password:"David",
-        authtoken:"David_token"
-    },
-    {
-        username:"Catherine",
-        password:"Catherine",
-        authtoken:"Catherine_token"
-    },
-    {
-        username:"Stephanie",
-        password:"Stephanie",
-        authtoken:"Stephanie_token"
-    },
-    {
-        username:"Emma",
-        password:"Emma",
-        authtoken:"Emma_token"
-    },
-    {
-        username:"Erin",
-        password:"Erin",
-        authtoken:"Erin_token"
-    }
-];
-let messages = [
-    {
-        text:"hi there, how are you?",
-        sender:"Jimmy",
-        recipient:"Andrew"
-    },
-    {
-        text:"I am doing well, how about yourself?",
-        sender:"Andrew",
-        recipient:"Jimmy"
-    },
-    {
-        text:"what's up?",
-        sender:"Joseph",
-        recipient:"Andrew"
-    },
-    {
-        text:"hey Emma, how are you doing?",
-        sender:"Andrew",
-        recipient:"Emma"
-    },
-    {
-        text:"I'm good",
-        sender:"Emma",
-        recipient:"Andrew"
-    },
-    {
-        text:"hey Stephanie, how are you doing?",
-        sender:"Andrew",
-        recipient:"Stephanie"
-    },
-    {
-        text:"cool",
-        sender:"Stephanie",
-        recipient:"Andrew"
-    },
-    {
-        text:"I won the lottery!",
-        sender:"Andrew",
-        recipient:"Erin"
-    },
-    {
-        text:"nice!",
-        sender:"Erin",
-        recipient:"Andrew"
-    }
-];
-
 app.get('/authorize/:authtoken',(req,res) => {
     let nextLink;
     let success = false;
@@ -190,41 +100,16 @@ app.put('/messages',(req,res) => {
 app.put('/user',(req,res) => {
     let updatedUser = req.body;
 
-    let oldUser;
-    let unique = true;
-    let found = false;
-    let message;
-    users.forEach((user) => {
-        if(user.username === updatedUser.oldUsername){
-            oldUser = user;
-            found = true;
+    let result = database.updateUser(updatedUser);
+
+    result.then((response) => {
+        if(response.success){
+            response.nextLink = MESSAGE_HOME;
+            res.send(response);
         }
         else{
-            if(user.username === updatedUser.newUsername){
-                unique = false;
-                message = "non-unique username submitted";
-            }
-            else if(user.password === updatedUser.newPassword){
-                unique = false;
-                message = "non-unique password submitted";
-            }
+            res.send(response);
         }
-    });
-
-    let success = false;
-    if(found && unique){
-        oldUser.username = updatedUser.newUsername;
-        oldUser.password = updatedUser.newPassword;
-        oldUser.authtoken = updatedUser.newUsername + "_token";
-        success = true;
-    }
-
-    res.send({
-        "success":success,
-        "username":oldUser?.username,
-        "authtoken":oldUser?.authtoken,
-        "message":message,
-        "nextLink":MESSAGE_HOME
     });
 });
 
@@ -237,9 +122,6 @@ app.post('/user',(req,res) => {
     const result = database.addUser(createdUser);
 
     result.then((addConfirm) => {
-        if(addConfirm.success){
-            users.push(createdUser);
-        }
         res.send({
             "success":addConfirm.success,
             "username":createdUser.username,

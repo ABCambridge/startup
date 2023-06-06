@@ -29,7 +29,7 @@ async function putMessage(message){
 
 async function addUser(newUser){
     const unique = await checkCredentials(newUser.username,newUser.password);
-    if(unique !== 0){
+    if(unique.length !== 0){
         return {
             success: false,
             message: "non-unique username or password used"
@@ -38,13 +38,39 @@ async function addUser(newUser){
     else{
         const result = await users.insertOne(newUser);
         result.success = true;
-        console.log(result);
         return result;
-    }//DOUBLE check on the return value if there are zero results
+    }
 }
 
 async function updateUser(updatedUser){
-//TODO: do this last
+    if(updatedUser.newUsername !== updatedUser.oldUsername){
+        let response = users.find({username: updatedUser.newUsername});
+        let result = await response.toArray();
+        if(result.length !== 0){
+            return {
+                "success":false,
+                "message":"Username is not unique"
+            };
+        }
+    }
+
+    let toInsert = {
+        "username":updatedUser.newUsername,
+        "password":updatedUser.newPassword,
+        "authtoken":updatedUser.newUsername + "_token"
+    };
+
+    let insert = users.findOneAndReplace({username: updatedUser.oldUsername},toInsert);
+
+    messages.updateMany({sender: updatedUser.oldUsername},{$set: {sender: updatedUser.newUsername}});
+    messages.updateMany({recipient: updatedUser.oldUsername},{$set: {recipient: updatedUser.newUsername}});
+
+    return {
+        "success":true,
+        "message":"updated to " + updatedUser.newUsername,
+        "username":toInsert.username,
+        "authtoken":toInsert.authtoken
+    }
 }
 
 async function getUserList(){
@@ -55,7 +81,7 @@ async function getUserList(){
 async function checkCredentials(checkUsername, checkPassword){
     const query = {$or: [{username: checkUsername},{password: checkPassword}]};
     const cursor = users.find(query);
-    return (await cursor.toArray()).length;
+    return await cursor.toArray();
 }
 
 async function validateCredentials(checkUsername){
