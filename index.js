@@ -167,21 +167,18 @@ app.get('/conversations/:username',(req,res) => {
 });
 
 app.get('/messages/:username',(req,res) => {
-    let personalMessages = [];
-    messages.forEach((message) => {
-        if(message.recipient === req.params.username || message.sender === req.params.username){
-            personalMessages.push(message);
-        }
-    });
+    let result = database.getMessages(req.params.username);
 
-    res.send({
-        "success":true,
-        "messages":personalMessages
+    result.then((messageList) => {
+        res.send({
+            "success":true,
+            "messages":messageList
+        });
     });
 });
 
 app.put('/messages',(req,res) => {
-    messages.push(req.body);
+    database.putMessage(req.body);
     res.send({"success":true});
 });
 
@@ -245,9 +242,7 @@ app.post('/user',(req,res) => {
             "message":addConfirm.message,
             "nextLink":MESSAGE_HOME
         });
-    });
-
-    
+    });    
 });
 
 const port = 4000;
