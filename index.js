@@ -149,17 +149,21 @@ app.get('/login/:username/:password',(req,res) => {
 });
 
 app.get('/conversations/:username',(req,res) => {
+    let listResult = database.getUserList();
     let conversations = [];
-    users.forEach((user) => {
-        if(user.username !== req.params.username){
-            conversations.push(user.username);
-        }
-    });
 
-    res.send({
-        "success":true,
-        "conversations":conversations
-    });//success will only not be true if there is an error accessing the database
+    listResult.then((userList) => {
+        userList.forEach((user) => {
+                if(user.username !== req.params.username){
+                    conversations.push(user.username);
+                }
+            });
+
+        res.send({
+            "success":true,
+            "conversations":conversations
+        });
+    });
 });
 
 app.get('/messages/:username',(req,res) => {
@@ -223,41 +227,27 @@ app.put('/user',(req,res) => {
 });
 
 app.post('/user',(req,res) => {
-    let newUser = req.body;
-
-    let unique = true;
-    let message;
-
-    users.forEach((user) => {
-        if(user.username === newUser.newUsername){
-            unique = false;
-            message = "non-unique username submitted";
-        }
-        else if(user.password === newUser.newPassword){
-            unique = false;
-            message = "non-unique password submitted";
-        }
-    });
-
-    let success = false;
-    let createdUser;
-    if(unique){
-        createdUser = {
-            "username":newUser.newUsername,
-            "password":newUser.newPassword,
-            "authtoken":newUser.newUsername + "_token"
-        }
-        users.push(createdUser);
-        success = true;
+    let createdUser = {
+        "username": req.body.newUsername,
+        "password": req.body.newPassword,
+        "authtoken": req.body.newUsername + "_token"
     }
+    const result = database.addUser(createdUser);
 
-    res.send({
-        "success":success,
-        "username":createdUser?.username,
-        "authtoken":createdUser?.authtoken,
-        "message":message,
-        "nextLink":MESSAGE_HOME
+    result.then((addConfirm) => {
+        if(addConfirm.success){
+            users.push(createdUser);
+        }
+        res.send({
+            "success":addConfirm.success,
+            "username":createdUser.username,
+            "authtoken":createdUser.authtoken,
+            "message":addConfirm.message,
+            "nextLink":MESSAGE_HOME
+        });
     });
+
+    
 });
 
 const port = 4000;

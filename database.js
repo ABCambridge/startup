@@ -28,12 +28,28 @@ async function putMessage(message){
 }
 
 async function addUser(newUser){
-    const result = await users.insertOne(newUser);
-    return result;
+    const unique = await checkCredentials(newUser.username,newUser.password);
+    if(unique !== 0){
+        return {
+            success: false,
+            message: "non-unique username or password used"
+        };
+    }
+    else{
+        const result = await users.insertOne(newUser);
+        result.success = true;
+        console.log(result);
+        return result;
+    }//DOUBLE check on the return value if there are zero results
 }
 
 async function updateUser(updatedUser){
 
+}
+
+async function getUserList(){
+    let userList = await users.find().toArray();
+    return userList;
 }
 
 async function checkCredentials(checkUsername, checkPassword){
@@ -42,4 +58,4 @@ async function checkCredentials(checkUsername, checkPassword){
     return (await cursor.toArray()).length;//TODO make sure this doesn't need "()"
 }
 
-module.exports = {getMessages, putMessage, addUser, updateUser, checkCredentials};
+module.exports = {getMessages, putMessage, addUser, updateUser, getUserList, checkCredentials};
