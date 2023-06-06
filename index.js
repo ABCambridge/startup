@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const uuid = require('uuid');
+const database = require('./database.js');
 
 const app = express();
 
