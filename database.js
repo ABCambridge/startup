@@ -62,7 +62,7 @@ async function updateUser(updatedUser){
         "authtoken":previous.authtoken
     };
 
-    users.findOneAndUpdate({username: previous.username},{$set: {username: toInsert.username, password: toInsert.hash}});
+    users.findOneAndUpdate({username: previous.username},{$set: {username: toInsert.username, password: toInsert.password}});
 
     messages.updateMany({sender: previous.username},{$set: {sender: updatedUser.newUsername}});
     messages.updateMany({recipient: previous.username},{$set: {recipient: updatedUser.newUsername}});
