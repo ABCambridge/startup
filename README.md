@@ -58,3 +58,9 @@ For this deliverable, I added the following functionality:
 * Frontend calls third parts services: complete - client calls a free quoting service that periodically updates the quote on the login page.
 * Backend provides service endpoints: complete - server takes all needed endpoint calls and returns the appropriate response and data based on what it keeps in memory.
 * Frontend calls service endpoints: complete - client makes various calls the service endpoints which reply with the pertinent data.image.png
+
+## Database Deliverable
+For this deliverable, I added the following functionality:
+* MongoDB Atlas database created: done! database.js contacts the database and my information is stored in there
+* Backend endpoints for manipulating data: done and working! The server edits and accesses data in the database and serves it to the client. The server calls functions on the database.js file, which then provides functionality for the client to server endpoints. All data persists in the database.
+* Stores applicatoin data in MongoDB: Done! All user and message data is stored in the database.
