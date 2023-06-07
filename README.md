@@ -64,3 +64,10 @@ For this deliverable, I added the following functionality:
 * MongoDB Atlas database created: done! database.js contacts the database and my information is stored in there
 * Backend endpoints for manipulating data: done and working! The server edits and accesses data in the database and serves it to the client. The server calls functions on the database.js file, which then provides functionality for the client to server endpoints. All data persists in the database.
 * Stores applicatoin data in MongoDB: Done! All user and message data is stored in the database.
+
+## Login Deliverable
+For this deliverable, I refined the following functionality:
+* Supports new user registration: done! new users are able to create an account with a unique username and are immediately logged in. Passwords are encrypted in the data base.
+* Supports existing user authentication: done! existing users can log in and their password is compared to the encrypted on in the database. Users can update their username and password and are immediately still authenticated and can use the new info to login.
+* Store/retrieves credentials in MongoDB: done! all credentials are stored in MongoDB (username, encrypted password, authtoken).
+* Resticts functionality based on authentication: done! you can only access the messaging or settings page when you are logged in. Trying to access them while logged out results in being redirected to the login page.
