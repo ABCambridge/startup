@@ -1,4 +1,4 @@
-const USERNAME_KEY = "username";
+const USERNAME_KEY = "FastChat_username";
 
 async function submitChanges(){
     let newUsername = document.getElementById("username").value;

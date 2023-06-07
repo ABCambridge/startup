@@ -1,5 +1,4 @@
-const AUTH_KEY = "authtoken";
-const USERNAME_KEY = "username";
+const USERNAME_KEY = "FastChat_username";
 
 async function verifyAuthForLogin(){
     const response = await fetch (`/authorize`,{
@@ -47,7 +46,6 @@ async function validateCredentials(username,password){
         const loginResult = await response.json();
 
         if(loginResult.success){
-            localStorage.setItem(AUTH_KEY,loginResult.authtoken);
             localStorage.setItem(USERNAME_KEY,loginResult.username);
             window.location.href = loginResult.nextLink;
         }

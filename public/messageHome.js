@@ -1,5 +1,5 @@
-const USERNAME_KEY = "username";
-const MESSAGES_KEY = "messages";
+const USERNAME_KEY = "FastChat_username";
+const MESSAGES_KEY = "FastChat_messages";
 const OUTGOING_MESSAGE = "outgoingMessage";
 const INCOMING_MESSAGE = "incomingMessage";
 

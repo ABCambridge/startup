@@ -12,13 +12,14 @@ app.use(cookieParser());
 
 const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";
+const TOKEN_NAME = "FastChat_token";
 
 app.get('/authorize',(req,res) => {
     let nextLink;
     let success = false;
     let username;
 
-    let result = database.findByAuthtoken(req.cookies['token']);
+    let result = database.findByAuthtoken(req.cookies[TOKEN_NAME]);
 
     result.then((data) => {
         if(data !== null){
@@ -80,7 +81,7 @@ app.get('/login/:username/:password',async function (req,res) {
 app.put('/logout',(req,res) => {
     let nextLink;
     let success = false;
-    let authtoken = req.cookies['token']; 
+    let authtoken = req.cookies[TOKEN_NAME]; 
     let result = database.findByAuthtoken(authtoken);
 
     result.then((data) => {
@@ -142,7 +143,7 @@ app.put('/user',(req,res) => {
                 result.then((response) => {
                     if(response.success){
                         response.nextLink = MESSAGE_HOME;
-                        setCookieToken(res,req.cookies['token']);
+                        setCookieToken(res,req.cookies[TOKEN_NAME]);
                         res.send(response);
                     }
                     else{
@@ -185,7 +186,7 @@ app.post('/user',(req,res) => {
 });
 
 function setCookieToken(res,token){
-    res.cookie('token',token,{
+    res.cookie(TOKEN_NAME,token,{
         secure:true,
         httpOnly: true,
         sameSite: 'strict'

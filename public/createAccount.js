@@ -1,5 +1,4 @@
-const AUTH_KEY = "authtoken";
-const USERNAME_KEY = "username";
+const USERNAME_KEY = "FastChat_username";
 async function createAccount(){
     let newUsername = document.getElementById("username").value;
     let newPassword = document.getElementById("password").value;
