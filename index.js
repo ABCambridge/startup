@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const uuid = require('uuid');
+const crypt = require('bcrypt');
 const database = require('./database.js');
 
 const app = express();
@@ -47,18 +48,29 @@ app.get('/login/:username/:password',(req,res) => {
 
     result.then((data) => {
         if(data !== null ){
-            if(data.password === req.params.password){
-                success = true;
-                authtoken = data.authtoken;
-                nextLink = MESSAGE_HOME;
-            }
+            let confirm = crypt.compare(req.params.password,data.password);
+
+            confirm.then((isGood) => {
+                if(isGood){
+                    success = true;
+                    authtoken = data.authtoken;
+                    nextLink = MESSAGE_HOME;
+                }
+                res.send({
+                    'success':success,
+                    'nextLink':nextLink,
+                    'authtoken':authtoken,
+                    'username':req.params.username
+                 });
+            });
         }
-        res.send({
-            'success':success,
-            'nextLink':nextLink,
-            'authtoken':authtoken,
-            'username':req.params.username
-        });
+        else{
+            res.send({
+                'success':success,
+                'username':req.params.username,
+                'message':"Requested user does not exist"
+             });
+        }
     });
 
 });
@@ -114,22 +126,25 @@ app.put('/user',(req,res) => {
 });
 
 app.post('/user',(req,res) => {
-    let createdUser = {
-        "username": req.body.newUsername,
-        "password": req.body.newPassword,
-        "authtoken": req.body.newUsername + "_token"
-    }
-    const result = database.addUser(createdUser);
+    let getHash = crypt.hash(req.body.newPassword,10);
+    getHash.then((hash) => {
+        let createdUser = {
+            "username": req.body.newUsername,
+            "password": hash,
+            "authtoken": uuid.v4()
+        }
 
-    result.then((addConfirm) => {
-        res.send({
-            "success":addConfirm.success,
-            "username":createdUser.username,
-            "authtoken":createdUser.authtoken,
-            "message":addConfirm.message,
-            "nextLink":MESSAGE_HOME
-        });
-    });    
+        const result = database.addUser(createdUser);
+        result.then((addConfirm) => {
+            res.send({
+                "success":addConfirm.success,
+                "username":createdUser.username,
+                "authtoken":createdUser.authtoken,
+                "message":addConfirm.message,
+                "nextLink":MESSAGE_HOME
+            });
+        });    
+    });
 });
 
 const port = 4000;
