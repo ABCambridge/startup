@@ -90,7 +90,7 @@ app.put('/logout',(req,res) => {
             success = true;
             nextLink = INDEX_HTML;
         }
-        setCookieToken(res,null);
+        res.clearCookie(TOKEN_NAME);
         res.send({
             "success":success,
             "nextLink":nextLink
