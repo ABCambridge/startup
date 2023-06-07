@@ -26,7 +26,6 @@ async function createAccount(){
 
         if(result.success){
             localStorage.setItem(USERNAME_KEY,result.username);
-            localStorage.setItem(AUTH_KEY,result.authtoken);
             window.location.href = result.nextLink;
         }
         else{

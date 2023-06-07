@@ -1,13 +1,10 @@
-const AUTH_KEY = "authtoken";
 const USERNAME_KEY = "username";
 const MESSAGES_KEY = "messages";
 const OUTGOING_MESSAGE = "outgoingMessage";
 const INCOMING_MESSAGE = "incomingMessage";
 
 async function verifyAuthForMessages(){
-    const authtoken = localStorage.getItem(AUTH_KEY);
-
-    const response = await fetch(`/authorize/${authtoken}`,{
+    const response = await fetch(`/authorize`,{
         method: 'GET',
         headers: {'content-type':'application/json'}
     });
@@ -16,7 +13,6 @@ async function verifyAuthForMessages(){
 
     if(!authCheck.success){
         alert("Session authentication failed. Please login again.");
-        localStorage.removeItem(AUTH_KEY);
         window.location.href = authCheck.nextLink;
     }
 }
@@ -97,7 +93,7 @@ function addMessageTypes(){
 }
 
 function updateUserDisplay(){
-    document.querySelector("#currentUser").textContent = "Logged in as " + localStorage.getItem("username");
+    document.querySelector("#currentUser").textContent = "Logged in as " + localStorage.getItem(USERNAME_KEY);
 }
 
 function selectConversation(conversation){
@@ -206,8 +202,16 @@ async function updateMessageStorage(newMessage){
     }
 }
 
-function logout(){
-    localStorage.removeItem(AUTH_KEY);
+async function logout(){
     localStorage.removeItem(MESSAGES_KEY);
-    window.location.href = "index.html";
+
+    const response = await fetch('/logout',{
+        method: 'PUT',
+        headers: {'content-type':'application/json'}
+    });
+    const result = await response.json();
+
+    if(result.success){
+        window.location.href = result.nextLink;
+    }
 }

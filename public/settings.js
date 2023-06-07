@@ -1,4 +1,3 @@
-const AUTH_KEY = "authtoken";
 const USERNAME_KEY = "username";
 
 async function submitChanges(){
@@ -29,7 +28,6 @@ async function submitChanges(){
 
         if(result.success){
             localStorage.setItem(USERNAME_KEY,result.username);
-            localStorage.setItem(AUTH_KEY,result.authtoken);
             window.location.href = result.nextLink;
         }
         else{
@@ -39,7 +37,7 @@ async function submitChanges(){
 }
 
 async function fillFields(){
-    const response = await fetch(`/authorize/${localStorage.getItem(AUTH_KEY)}`);
+    const response = await fetch(`/authorize`);
     const result = await response.json();
 
     if(!result.success){

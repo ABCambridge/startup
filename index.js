@@ -13,20 +13,23 @@ app.use(cookieParser());
 const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";
 
-app.get('/authorize/:authtoken',(req,res) => {
+app.get('/authorize',(req,res) => {
     let nextLink;
     let success = false;
     let username;
 
-    let result = database.findByAuthtoken(req.params.authtoken);
+    let result = database.findByAuthtoken(req.cookies['token']);
 
     result.then((data) => {
         if(data !== null){
-            success = true;
-            username = data.username;
-            nextLink = MESSAGE_HOME;
+            if(data.loggedIn){
+                success = true;
+                username = data.username;
+                nextLink = MESSAGE_HOME;
+            }
         }
-        else{
+        if(!success){
+            res.status(401);
             nextLink = INDEX_HTML;
         }
 
@@ -39,40 +42,59 @@ app.get('/authorize/:authtoken',(req,res) => {
 
 });
 
-app.get('/login/:username/:password',(req,res) => {
+app.get('/login/:username/:password',async function (req,res) {
     let success = false;
     let authtoken;
     let nextLink;
 
     let result = database.validateCredentials(req.params.username);
 
-    result.then((data) => {
+    result.then(async function (data) {
         if(data !== null ){
-            let confirm = crypt.compare(req.params.password,data.password);
-
-            confirm.then((isGood) => {
-                if(isGood){
-                    success = true;
-                    authtoken = data.authtoken;
-                    nextLink = MESSAGE_HOME;
-                }
-                res.send({
-                    'success':success,
-                    'nextLink':nextLink,
-                    'authtoken':authtoken,
-                    'username':req.params.username
-                 });
-            });
-        }
-        else{
+            let comp = await crypt.compare(req.params.password,data.password);
+            if(comp){
+                success = true;
+                authtoken = data.authtoken;
+                nextLink = MESSAGE_HOME;
+                setCookieToken(res,data.authtoken);
+                database.changeLoginStatus(authtoken,true);
+            }
+            if(!success){
+                res.status(401);
+            }
             res.send({
                 'success':success,
-                'username':req.params.username,
-                'message':"Requested user does not exist"
-             });
+                'nextLink':nextLink,
+                'username':req.params.username
+            }); 
+        }
+        else{
+            res.status(401).send({
+                "success":false,
+                "message":"Requested user does not exist"
+            });
         }
     });
+});
 
+app.put('/logout',(req,res) => {
+    let nextLink;
+    let success = false;
+    let authtoken = req.cookies['token']; 
+    let result = database.findByAuthtoken(authtoken);
+
+    result.then((data) => {
+        if(data !== null){
+            database.changeLoginStatus(authtoken,false);
+            success = true;
+            nextLink = INDEX_HTML;
+        }
+        setCookieToken(res,null);
+        res.send({
+            "success":success,
+            "nextLink":nextLink
+        });
+    });
 });
 
 app.get('/conversations/:username',(req,res) => {
@@ -112,17 +134,31 @@ app.put('/messages',(req,res) => {
 app.put('/user',(req,res) => {
     let updatedUser = req.body;
 
-    let result = database.updateUser(updatedUser);
+    database.validateCredentials(updatedUser.oldUsername)
+        .then((isLoggedIn) => {
+            if(isLoggedIn){
+                let result = database.updateUser(updatedUser);
 
-    result.then((response) => {
-        if(response.success){
-            response.nextLink = MESSAGE_HOME;
-            res.send(response);
-        }
-        else{
-            res.send(response);
-        }
-    });
+                result.then((response) => {
+                    if(response.success){
+                        response.nextLink = MESSAGE_HOME;
+                        setCookieToken(res,req.cookies['token']);
+                        res.send(response);
+                    }
+                    else{
+                        res.send(response);
+                    }
+                });
+            }
+            else{
+                res.status(401).send({
+                    "success":false,
+                    "message": "Authentication session failed"
+                })
+            }
+        });
+
+    
 });
 
 app.post('/user',(req,res) => {
@@ -136,16 +172,25 @@ app.post('/user',(req,res) => {
 
         const result = database.addUser(createdUser);
         result.then((addConfirm) => {
+            database.changeLoginStatus(createdUser.authtoken,true);
+            setCookieToken(res,createdUser.authtoken);
             res.send({
                 "success":addConfirm.success,
                 "username":createdUser.username,
-                "authtoken":createdUser.authtoken,
                 "message":addConfirm.message,
                 "nextLink":MESSAGE_HOME
             });
         });    
     });
 });
+
+function setCookieToken(res,token){
+    res.cookie('token',token,{
+        secure:true,
+        httpOnly: true,
+        sameSite: 'strict'
+    });
+}
 
 const port = 4000;
 app.listen(port,function (){ 

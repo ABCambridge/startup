@@ -2,22 +2,15 @@ const AUTH_KEY = "authtoken";
 const USERNAME_KEY = "username";
 
 async function verifyAuthForLogin(){
-    const authtoken = localStorage.getItem(AUTH_KEY);
+    const response = await fetch (`/authorize`,{
+        method: 'GET',
+        headers: {'content-type':'application/json'}
+    });
+    
+    const authCheck = await response.json();
 
-    if(authtoken !== null){
-        const response = await fetch (`/authorize/${authtoken}`,{
-            method: 'GET',
-            headers: {'content-type':'application/json'}
-        });
-        
-        const authCheck = await response.json();
-
-        if(!authCheck.success){
-            localStorage.removeItem(AUTH_KEY);
-        }
-        else{
-            localStorage.setItem(USERNAME_KEY,authCheck.username)
-        }
+    if(authCheck.success){
+        localStorage.setItem(USERNAME_KEY,authCheck.username);
         window.location.href = authCheck.nextLink;
     }
 }

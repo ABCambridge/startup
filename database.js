@@ -62,7 +62,7 @@ async function updateUser(updatedUser){
         "authtoken":previous.authtoken
     };
 
-    let insert = users.findOneAndReplace({username: previous.username},toInsert);
+    users.findOneAndUpdate({username: previous.username},{$set: {username: toInsert.username, password: toInsert.hash}});
 
     messages.updateMany({sender: previous.username},{$set: {sender: updatedUser.newUsername}});
     messages.updateMany({recipient: previous.username},{$set: {recipient: updatedUser.newUsername}});
@@ -71,7 +71,6 @@ async function updateUser(updatedUser){
         "success":true,
         "message":"updated " + previous.username + " to " + toInsert.username,
         "username":toInsert.username,
-        "authtoken":toInsert.authtoken
     }
 }
 
@@ -92,4 +91,8 @@ async function findByAuthtoken(checkAuthtoken){
     return cursor;
 }
 
-module.exports = {getMessages, putMessage, addUser, updateUser, getUserList, validateCredentials, findByAuthtoken};
+async function changeLoginStatus(token,isLoggedIn){
+    users.updateOne({authtoken: token},{$set: {loggedIn: isLoggedIn}});
+}
+
+module.exports = {getMessages, putMessage, addUser, updateUser, getUserList, validateCredentials, findByAuthtoken,changeLoginStatus};
