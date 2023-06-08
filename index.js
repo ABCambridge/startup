@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const uuid = require('uuid');
 const crypt = require('bcrypt');
 const database = require('./database.js');
+const { chatProxy } = require('./chatProxy.js');
 
 const app = express();
 
@@ -194,6 +195,8 @@ function setCookieToken(res,token){
 }
 
 const port = 4000;
-app.listen(port,function (){ 
+const server = app.listen(port,function (){ 
     console.log(`Listening on port ${port}`);
 });
+
+chatProxy(server);

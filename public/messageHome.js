@@ -19,6 +19,27 @@ async function verifyAuthForMessages(){
 
 verifyAuthForMessages();
 
+let webSocket;
+
+async function startWebSocket(){
+    const protocol = (window.location.protocol === 'http:' ? 'ws' : 'wss');
+    webSocket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+    webSocket.onopen = (data) => {
+        //TODO: do I actually need to do anything here?
+    };
+    webSocket.onclose = (data) => {
+        //TODO: do I actually need to do anything here?
+    };
+
+    webSocket.onmessage = async (message) => {
+        console.log('message received');
+        //TODO: this is where you update the messages based on what you received
+    };
+}
+
+startWebSocket();
+
 let currentConversation = null;
 let conversations = null;
 let messages = null;
@@ -172,6 +193,11 @@ function getIncomingMessages(){
 }
 
 function sendMessage(){
+    webSocket.send(JSON.stringify({
+        "type":"hostUserUpdate",
+        "hostUser":window.localStorage.getItem(USERNAME_KEY)
+    }));
+
     if(acceptMessages && currentConversation !== null){
         const inputBox = document.querySelector("#messageBox");
         let outgoingMessage = {
