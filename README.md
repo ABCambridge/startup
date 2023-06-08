@@ -71,3 +71,10 @@ For this deliverable, I refined the following functionality:
 * Supports existing user authentication: done! existing users can log in and their password is compared to the encrypted on in the database. Users can update their username and password and are immediately still authenticated and can use the new info to login.
 * Store/retrieves credentials in MongoDB: done! all credentials are stored in MongoDB (username, encrypted password, authtoken).
 * Resticts functionality based on authentication: done! you can only access the messaging or settings page when you are logged in. Trying to access them while logged out results in being redirected to the login page.
+
+## WebSocket Deliverable
+For this deliverable, I added the following functionality:
+* Backend listens for WebSocket connection: done! My server upgrades connections to WebSocket and creates all of the callbacks needed. Listens for messages sent from the client and forwards them to the appropriate connections based on the intended recipient.
+* Frontend makes WebSocket connection: done! Client immediately opens a WebSocket connection with the server when the messaging page is loaded, and then sends and receives messages.
+* Data sent over WebSocket connection: done! After a connection is open, the client sends the server some info identifying its user. Messages are both sent and received over the WebSocket.
+* WebSocket dat displayed in the application interface: done! When the client receives a WebSocket message containing a new message, it processes it and displays the data's contents as a new message (assuming the message is for the chat they have open).
