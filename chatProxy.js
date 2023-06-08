@@ -1,5 +1,6 @@
 const { WebSocketServer } = require('ws');
 const uuid = require('uuid');
+const database = require('./database.js');
 
 function chatProxy(httpServer){
     const wss = new WebSocketServer({noServer: true});
@@ -21,15 +22,23 @@ function chatProxy(httpServer){
         };
         connections.push(connection);
 
-        ws.on('message',function message(data) {
-            console.log('got to message');
+        ws.on('message',function message(bytes) {
+            let data = JSON.parse(bytes.toString());
             if(data.type === "hostUserUpdate"){
                 connection.hostUser = data.hostUser;
-                //TODO: this should also be used when a user changes their username
             }
             else if(data.type === "message"){
-                //TODO: load the message into the database
-                //TODO: pass any other messages to the recipientUser
+                let message = JSON.parse(data.message);
+                database.putMessage(message);
+                
+                connections.forEach((activeUser) => {
+                    if(activeUser.hostUser === message.recipient){
+                        activeUser.socket.send(JSON.stringify({
+                            "type":"message",
+                            "message":data.message
+                        }));
+                    }
+                });
             }
         });
 

@@ -26,15 +26,23 @@ async function startWebSocket(){
     webSocket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
     webSocket.onopen = (data) => {
-        //TODO: do I actually need to do anything here?
+        webSocket.send(JSON.stringify({
+            "type":"hostUserUpdate",
+            "hostUser":window.localStorage.getItem(USERNAME_KEY)
+        }));
     };
     webSocket.onclose = (data) => {
         //TODO: do I actually need to do anything here?
     };
 
-    webSocket.onmessage = async (message) => {
-        console.log('message received');
-        //TODO: this is where you update the messages based on what you received
+    webSocket.onmessage = async (bytes) => {
+        let data = JSON.parse(bytes.data);
+        if(data.type === "message"){
+            let message = JSON.parse(data.message);
+            message.type = INCOMING_MESSAGE;
+            updateMessageStorage(message);
+            loadMessages();
+        }
     };
 }
 
@@ -174,30 +182,10 @@ function insertMessage(message,messageWindow){
     newMessage.setAttribute('class',`message ${message.type}`);
     newMessage.textContent = message.text;
     messageWindow.appendChild(newMessage);
-}
-
-function getIncomingMessages(){
-    // represents the function that will receive and load the incoming messages from the web socket
-    setInterval(() => {
-        if(acceptMessages && currentConversation !== null){
-            let incomingMessage = {
-                text: "Man, CS260 is such a cool class!",
-                type: INCOMING_MESSAGE,
-                sender: currentConversation.textContent,
-                recipient: localStorage.getItem(USERNAME_KEY)
-            }
-            updateMessageStorage(incomingMessage);
-            insertMessage(incomingMessage,document.querySelector("#messages"));
-        }
-    },10000);
+    messageWindow.scrollTo(0,messageWindow.scrollHeight);
 }
 
 function sendMessage(){
-    webSocket.send(JSON.stringify({
-        "type":"hostUserUpdate",
-        "hostUser":window.localStorage.getItem(USERNAME_KEY)
-    }));
-
     if(acceptMessages && currentConversation !== null){
         const inputBox = document.querySelector("#messageBox");
         let outgoingMessage = {
@@ -206,7 +194,14 @@ function sendMessage(){
             sender: localStorage.getItem(USERNAME_KEY),
             recipient: currentConversation.textContent
         }
+
         updateMessageStorage(outgoingMessage);
+
+        webSocket.send(JSON.stringify({
+            "type":"message",
+            "message":JSON.stringify(outgoingMessage)
+        }));
+
         insertMessage(outgoingMessage,document.querySelector("#messages"));
         inputBox.value = "";
     }
@@ -215,17 +210,17 @@ function sendMessage(){
 async function updateMessageStorage(newMessage){
     messages.push(newMessage);
     localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
-    const response = await fetch('/messages',{
-        method: 'PUT',
-        headers: {'content-type':'application/json'},
-        body: JSON.stringify(newMessage)
-    });
+    // const response = await fetch('/messages',{
+    //     method: 'PUT',
+    //     headers: {'content-type':'application/json'},
+    //     body: JSON.stringify(newMessage)
+    // });
 
-    const updateResponse = await response.json();
+    // const updateResponse = await response.json();
 
-    if(!updateResponse.success){
-        alert('An error occured in updating messaging data. Info may be lost');
-    }
+    // if(!updateResponse.success){
+    //     alert('An error occured in updating messaging data. Info may be lost');
+    // }
 }
 
 async function logout(){
