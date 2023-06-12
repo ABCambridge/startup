@@ -2,49 +2,11 @@
 <html>
     <head>
         <title>FastChat</title>
-        <link rel="stylesheet"href="stylesheet.css"/>
-        <link rel="stylesheet"href="login.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="login.js"></script>
     </head>
     <body>
-        <header class="pageHeader borderItem">
-            <h1 class="menuButton pageTitle" >FastChat</h1>
-        </header>
-        <main class="centeredContent">
-            <div id="loginInformation">
-                <h3>Login to FastChat </h3>
-                <div>
-                    <label for="username">Username: </label>
-                    <input type="text"class="inputLocation"id="username"name="usernameText"placeholder="username here"/>
-                </div>
-                <div>
-                    <label for="password">Password: </label>
-                    <input type="text"class="inputLocation"id="password"name="passwordText"placeholder="password here"/>
-                </div>
-                <div>
-                    <button type="submit"class="positiveButton"onclick="login()">Login</button>
-                </div>
-                <div>
-                    <form action="createAccount.html">
-                        <button type="submit"class="alternateButton">Create new account</button>
-                    </form>
-                </div>
-            </div>
-            <div id="loginDecorations">
-                <div>
-                        <p id="quote"></p>
-                        <p><i id="author"></i></p>
-                </div>  
-                <script>
-                    getQuote();
-                </script>
-                <image id="introImage" src="./FastChat_Logo.png"alt="FastChat Logo"width="300"/>
-            </div>
-        </main>
-        <footer class="borderItem">
-            <a href="https://github.com/ABCambridge/startup.git">Andrew's GitHub for Startup</a>
-            <p>Authored by Andrew Cambridge</p>
-        </footer>
+        <noscript>You need JavaScript enabled to run this app.</noscript>
+        <div id="root"></div>
+        <script type="module" src="/index.jsx"></script>
     </body>
 </html>
