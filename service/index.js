@@ -10,6 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static('./'));
 app.use(cookieParser());
+app.set('trust proxy', true);
 
 const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";

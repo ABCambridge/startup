@@ -1,10 +1,10 @@
 import React from 'react';
 import './login.css';
 
-export function Login(){
+export function Login({ transitionScreen }){
     return (
         <main className="centeredContent">
-            <script src="login.js"></script>
+            {/* <script src="login.js"></script> */}
             <div id="loginInformation">
                 <h3>Login to FastChat </h3>
                 <div>
@@ -16,12 +16,10 @@ export function Login(){
                     <input type="text"className="inputLocation"id="password"name="passwordText"placeholder="password here"/>
                 </div>
                 <div>
-                    <button type="submit"className="positiveButton"onclick="login()">Login</button>
+                    <button type="submit"className="positiveButton"onClick={() => transitionScreen("messageHome")}>Login</button>
                 </div>
                 <div>
-                    <form action="createAccount.html">
-                        <button type="submit"className="alternateButton">Create new account</button>
-                    </form>
+                    <button type="submit"className="alternateButton" onClick={() => transitionScreen("createAccount")}>Create new account</button>
                 </div>
             </div>
             <div id="loginDecorations">
