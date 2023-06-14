@@ -36,7 +36,10 @@ async function getQuote(){
 function login(){
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
-    validateCredentials(username,password);
+    return {
+        "username":username,
+        "password":password
+    }
 }
 
 async function validateCredentials(username,password){
@@ -44,7 +47,7 @@ async function validateCredentials(username,password){
         alert("Please fill in both the username and password fields.");
     }
     else{
-        const response = await fetch(`/login/${username}/${password}`,{
+        const response = await fetch(`/api/login/${username}/${password}`,{
             method: 'GET',
             headers: {'content-type':'application/json'},
         });
@@ -53,12 +56,18 @@ async function validateCredentials(username,password){
 
         if(loginResult.success){
             localStorage.setItem(USERNAME_KEY,loginResult.username);
-            window.location.href = loginResult.nextLink;
+            return{
+                success:true,
+                username: loginResult.username
+            }
         }
         else{
             alert("Invalid login credentials.");
+            return{
+                success:false
+            }
         }
     }
 }
 
-export { verifyAuthForLogin }
+export { verifyAuthForLogin, login, validateCredentials }

@@ -8,6 +8,7 @@ import './app.css';
 
 export default function App(){
     const [child, setChild] = React.useState("login");
+    const [authorized, setAuth] = React.useState(false);
     let Next = getChild(child);
 
     return (
@@ -15,7 +16,7 @@ export default function App(){
             <header className="pageHeader borderItem">
                 <h1 className="menuButton pageTitle" >FastChat</h1>
             </header>
-            <Next transitionScreen={setChild} />
+            <Next transitionScreen={setChild} authorized={authorized} setAuth={setAuth} />
             <footer className="borderItem">
                 <a href="https://github.com/ABCambridge/startup.git">Andrew's GitHub for Startup</a>
                 <p>Authored by Andrew Cambridge</p>

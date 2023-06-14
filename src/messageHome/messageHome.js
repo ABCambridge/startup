@@ -214,14 +214,15 @@ async function updateMessageStorage(newMessage){
 
 async function logout(){
     localStorage.removeItem(MESSAGES_KEY);
+    localStorage.removeItem(USERNAME_KEY);
 
-    const response = await fetch('/logout',{
+    const response = await fetch('/api/logout',{
         method: 'PUT',
         headers: {'content-type':'application/json'}
     });
     const result = await response.json();
 
-    if(result.success){
-        window.location.href = result.nextLink;
-    }
+    return result.success;
 }
+
+export { logout }
