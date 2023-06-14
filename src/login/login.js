@@ -1,5 +1,7 @@
 const USERNAME_KEY = "FastChat_username";
 
+export { verifyAuthForLogin, login, validateCredentials, getQuote }
+
 async function verifyAuthForLogin(){
     const response = await fetch (`/api/authorize`,{
         method: 'GET',
@@ -72,5 +74,3 @@ async function validateCredentials(username,password){
         }
     }
 }
-
-export { verifyAuthForLogin, login, validateCredentials, getQuote }

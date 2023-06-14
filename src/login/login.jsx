@@ -11,7 +11,7 @@ export function Login({transitionScreen, authorized, setAuth}){
         verifyAuthForLogin()
             .then((result) =>{
                 if(result.success){
-                    setAuth(false);
+                    setAuth(true);
                     transitionScreen("messageHome");
                 }
             })
@@ -31,6 +31,7 @@ export function Login({transitionScreen, authorized, setAuth}){
         validateCredentials(credentials.username,credentials.password)
             .then((result) => {
                 if(result.success){
+                    setAuth(true);
                     transitionScreen("messageHome");
                 }
             })
