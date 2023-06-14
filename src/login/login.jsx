@@ -6,9 +6,6 @@ import { verifyAuthForLogin, login, validateCredentials } from './login';
 export function Login({transitionScreen, authorized, setAuth}){
     React.useEffect(() => {
         verifyAuthForLogin()
-            .then((response) => {
-                return response.json();
-            })
             .then((result) =>{
                 if(result.success){
                     transitionScreen("messageHome");
