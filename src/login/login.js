@@ -1,7 +1,7 @@
 const USERNAME_KEY = "FastChat_username";
 
 async function verifyAuthForLogin(){
-    const response = await fetch (`/authorize`,{
+    const response = await fetch (`/api/authorize`,{
         method: 'GET',
         headers: {'content-type':'application/json'}
     });
@@ -10,11 +10,17 @@ async function verifyAuthForLogin(){
 
     if(authCheck.success){
         localStorage.setItem(USERNAME_KEY,authCheck.username);
-        window.location.href = authCheck.nextLink;
+        return {
+            success: true,
+            username: authCheck.username
+        }
+    }
+    else{
+        return {
+            success: false
+        }
     }
 }
-
-verifyAuthForLogin();
 
 async function getQuote(){
     const response = await fetch('https://api.goprogram.ai/inspiration',{
@@ -54,3 +60,5 @@ async function validateCredentials(username,password){
         }
     }
 }
+
+export { verifyAuthForLogin }

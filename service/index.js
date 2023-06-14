@@ -16,7 +16,7 @@ const INDEX_HTML = "index.html";
 const MESSAGE_HOME = "messageHome.html";
 const TOKEN_NAME = "FastChat_token";
 
-app.get('/authorize',(req,res) => {
+app.get('/api/authorize',(req,res) => {
     let nextLink;
     let success = false;
     let username;
@@ -45,7 +45,7 @@ app.get('/authorize',(req,res) => {
 
 });
 
-app.get('/login/:username/:password',async function (req,res) {
+app.get('/api/login/:username/:password',async function (req,res) {
     let success = false;
     let authtoken;
     let nextLink;
@@ -80,7 +80,7 @@ app.get('/login/:username/:password',async function (req,res) {
     });
 });
 
-app.put('/logout',(req,res) => {
+app.put('/api/logout',(req,res) => {
     let nextLink;
     let success = false;
     let authtoken = req.cookies[TOKEN_NAME]; 
@@ -100,7 +100,7 @@ app.put('/logout',(req,res) => {
     });
 });
 
-app.get('/conversations/:username',(req,res) => {
+app.get('/api/conversations/:username',(req,res) => {
     let listResult = database.getUserList();
     let conversations = [];
 
@@ -118,7 +118,7 @@ app.get('/conversations/:username',(req,res) => {
     });
 });
 
-app.get('/messages/:username',(req,res) => {
+app.get('/api/messages/:username',(req,res) => {
     let result = database.getMessages(req.params.username);
 
     result.then((messageList) => {
@@ -129,12 +129,12 @@ app.get('/messages/:username',(req,res) => {
     });
 });
 
-app.put('/messages',(req,res) => {
+app.put('/api/messages',(req,res) => {
     database.putMessage(req.body);
     res.send({"success":true});
 });
 
-app.put('/user',(req,res) => {
+app.put('/api/user',(req,res) => {
     let updatedUser = req.body;
 
     database.validateCredentials(updatedUser.oldUsername)
@@ -164,7 +164,7 @@ app.put('/user',(req,res) => {
     
 });
 
-app.post('/user',(req,res) => {
+app.post('/api/user',(req,res) => {
     let getHash = crypt.hash(req.body.newPassword,10);
     getHash.then((hash) => {
         let createdUser = {

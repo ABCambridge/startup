@@ -210,17 +210,6 @@ function sendMessage(){
 async function updateMessageStorage(newMessage){
     messages.push(newMessage);
     localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
-    // const response = await fetch('/messages',{
-    //     method: 'PUT',
-    //     headers: {'content-type':'application/json'},
-    //     body: JSON.stringify(newMessage)
-    // });
-
-    // const updateResponse = await response.json();
-
-    // if(!updateResponse.success){
-    //     alert('An error occured in updating messaging data. Info may be lost');
-    // }
 }
 
 async function logout(){
