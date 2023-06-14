@@ -1,16 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './login.css';
-import { verifyAuthForLogin, login, validateCredentials } from './login';
+import { verifyAuthForLogin, login, validateCredentials, getQuote } from './login';
 
 export function Login({transitionScreen, authorized, setAuth}){
+    const [quote, setQuote] = React.useState(null);
+    const [author, setAuthor] = React.useState(null);
+
     React.useEffect(() => {
         verifyAuthForLogin()
             .then((result) =>{
                 if(result.success){
+                    setAuth(false);
                     transitionScreen("messageHome");
                 }
             })
+    },[]);
+
+    React.useEffect(() => {
+        getQuote()
+            .then((result) => {
+                setQuote(result.quote);
+                setAuthor(result.author);
+            });
     },[]);
 
     function tryLogin(){
@@ -46,8 +58,8 @@ export function Login({transitionScreen, authorized, setAuth}){
             </div>
             <div id="loginDecorations">
                 <div>
-                        <p id="quote"></p>
-                        <p><i id="author"></i></p>
+                        <p id="quote">{quote}</p>
+                        <p><i id="author">{author}</i></p>
                 </div>  
                 <script>
                     getQuote();

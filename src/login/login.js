@@ -23,14 +23,17 @@ async function verifyAuthForLogin(){
 }
 
 async function getQuote(){
-    const response = await fetch('https://api.goprogram.ai/inspiration',{
-        method: 'GET'
+    const response = await fetch('https://api.quotable.io/quotes/random',{
+        method: 'GET',
+        headers: {'content-type':'application/json'}
     });
 
     const result = await response.json();
 
-    document.getElementById("quote").textContent = result.quote;
-    document.getElementById("author").textContent = result.author;
+    return {
+        quote: result[0].content,
+        author: result[0].author
+    }
 }
 
 function login(){
@@ -70,4 +73,4 @@ async function validateCredentials(username,password){
     }
 }
 
-export { verifyAuthForLogin, login, validateCredentials }
+export { verifyAuthForLogin, login, validateCredentials, getQuote }
