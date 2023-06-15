@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import { Login } from './login/login.jsx';
 import { CreateAccount } from './createAccount/createAccount.jsx';
 import { MessageHome } from './messageHome/messageHome.jsx';

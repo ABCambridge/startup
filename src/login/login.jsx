@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './login.css';
 import { verifyAuthForLogin, login, validateCredentials, getQuote } from './login';
 
