@@ -1,7 +1,7 @@
 import React from 'react';
 import '../accountInfo.css';
 
-export function CreateAccount(){
+export function CreateAccount({transitionScreen, authorized, setAuth}){
     return (
         <main className="centeredContent">
             <script src="createAccount.js"></script>
@@ -24,9 +24,7 @@ export function CreateAccount(){
                 </div>
             </div>
             <div>
-                <form action="index.html">
-                    <button type="submit"className="alternateButton">Back to Login screen</button>
-                </form>
+                <button type="submit"className="alternateButton"onClick={() => transitionScreen("login")}>Back to Login screen</button>
             </div>
         </main>
     );

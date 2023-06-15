@@ -122,7 +122,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
                         <button type="submit"className="alternateButton menuButton"onClick={() => performLogout()}id="logoutButton">Logout</button>
                     </div>
                     <form action="settings.html">
-                        <button type="submit"className="alternateButton menuButton"id="settingsButton">Settings</button>
+                        <button type="submit"className="alternateButton menuButton"onClick={() => transitionScreen("settings")}id="settingsButton">Settings</button>
                     </form>
                 </nav>
                 <h5 id="currentUser">Logged in as {user}</h5>

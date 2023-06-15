@@ -1,7 +1,7 @@
 import React from 'react';
 import '../accountInfo.css';
 
-export function Settings(){
+export function Settings({transitionScreen, authorized, setAuth}){
     return (
         <main className="centeredContent">
         <script src="settings.js"></script>
@@ -24,9 +24,7 @@ export function Settings(){
                 </div>
             </div>
             <div>
-                <form action="messageHome.html">
-                    <button type="submit"className="alternateButton">Back to messages</button>
-                </form>
+                   <button type="submit"className="alternateButton"onClick={() => transitionScreen("messageHome")}>Back to messages</button>
             </div>
         </main>
     );

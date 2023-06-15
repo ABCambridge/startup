@@ -1,16 +1,20 @@
 html{
-    height: 100%;
+    max-height: 100vh;
 } 
+body{
+    margin:0px;
+    max-height: 100%;
+}
 .body{
     display:flex;
     flex-direction: column;
     margin:0px;
-    min-height: 100%;
+    max-height: 100%;
     width: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
 header{
-    flex: 0 75px; 
+    flex: 0 8vh; 
     display:flex;
     align-items: start;
     align-items: center;
@@ -34,7 +38,7 @@ header h1{
     }
 }
 main{
-    flex: 1 calc(100vh - 200px);
+    flex: 1 80vh;
     display:flex;
     align-items: center;
     justify-content: space-around;
@@ -45,7 +49,7 @@ footer{
     flex-direction: column;
     text-align: center;
     justify-content: center;
-    flex: 0 100px;
+    flex: 0 12vh;
     background-color: gray;
 }
 
