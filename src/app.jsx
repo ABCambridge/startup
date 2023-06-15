@@ -7,8 +7,6 @@ import './app.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export default function App(){
-    const [authorized, setAuth] = React.useState(false);
-
     return (
         <BrowserRouter>
             <div className='body'>
@@ -16,9 +14,9 @@ export default function App(){
                     <h1 className="menuButton pageTitle" >FastChat</h1>
                 </header>
                 <Routes>
-                    <Route path='/' element={<Login setAuth={setAuth}/>} exact />
-                    <Route path='/messageHome' element={<MessageHome authorized={authorized} setAuth={setAuth}/>} exact />
-                    <Route path='/createAccount' element={<CreateAccount setAuth={setAuth}/>} exact />
+                    <Route path='/' element={<Login/>} exact />
+                    <Route path='/messageHome' element={<MessageHome/>} exact />
+                    <Route path='/createAccount' element={<CreateAccount/>} exact />
                     <Route path='/settings' element={<Settings />} exact />
                 </Routes>
                 <footer className="borderItem">

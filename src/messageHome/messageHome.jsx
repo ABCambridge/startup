@@ -1,11 +1,11 @@
 import React from 'react';
 import './messageHome.css';
-import { logout, retrieveData, initialMessageLoad, Proxy } from './messageHome.js'
+import { verifyAuthForLogin,logout, retrieveData, initialMessageLoad, Proxy } from './messageHome.js'
 import { useNavigate } from 'react-router-dom';
 const USERNAME_KEY = "FastChat_username";
 
-export function MessageHome({ authorized, setAuth }){
-    const [user, setUser] = React.useState(window.localStorage.getItem(USERNAME_KEY));
+export function MessageHome(){
+    const user = window.localStorage.getItem(USERNAME_KEY);
     const [conversations, setConversations] = React.useState([]);
     const [convoName, setConvoName] = React.useState("(not selected)");
     const [messageBank, setMessageBank] = React.useState([]);
@@ -18,14 +18,14 @@ export function MessageHome({ authorized, setAuth }){
     };
 
     React.useEffect(()=>{
-        if(!authorized){
-            logout()
-                .then(()=> {
+        verifyAuthForLogin()
+            .then((result) => {
+                if(!result.success){
                     alert("Session authentication failed. Please login again.");
                     nav('/');
-                });
-        }
-    },[authorized]);
+                }
+            });
+    },[]);
 
     React.useEffect(() => {
         retrieveData()
@@ -98,7 +98,6 @@ export function MessageHome({ authorized, setAuth }){
     function performLogout(){
         logout()
             .then(()=>{
-                setAuth(false);
                 nav('/');
             });
     }

@@ -3,7 +3,7 @@ import './login.css';
 import { verifyAuthForLogin, login, validateCredentials, getQuote } from './login';
 import {useNavigate} from 'react-router-dom';
 
-export function Login({setAuth}){
+export function Login(){
     const [quote, setQuote] = React.useState(null);
     const [author, setAuthor] = React.useState(null);
     const nav = useNavigate();
@@ -12,7 +12,6 @@ export function Login({setAuth}){
         verifyAuthForLogin()
             .then((result) =>{
                 if(result.success){
-                    setAuth(true);
                     nav('/messageHome');
                 }
             })
@@ -32,7 +31,6 @@ export function Login({setAuth}){
         validateCredentials(credentials.username,credentials.password)
             .then((result) => {
                 if(result.success){
-                    setAuth(true);
                     nav('/messageHome');
                 }
             })

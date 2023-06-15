@@ -3,14 +3,13 @@ import '../accountInfo.css';
 import { createAccount } from './createAccount';
 import { useNavigate } from 'react-router-dom';
 
-export function CreateAccount({ setAuth}){
+export function CreateAccount(){
     const nav = useNavigate();
 
     function tryCreation(){
         createAccount()
             .then((result) => {
                 if(result.success){
-                    setAuth(true);
                     nav('/messageHome')
                 }
             });

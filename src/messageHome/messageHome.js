@@ -3,6 +3,28 @@ const MESSAGES_KEY = "FastChat_messages";
 const OUTGOING_MESSAGE = "outgoingMessage";
 const INCOMING_MESSAGE = "incomingMessage";
 
+async function verifyAuthForLogin(){
+    const response = await fetch (`/api/authorize`,{
+        method: 'GET',
+        headers: {'content-type':'application/json'}
+    });
+    
+    const authCheck = await response.json();
+
+    if(authCheck.success){
+        localStorage.setItem(USERNAME_KEY,authCheck.username);
+        return {
+            success: true,
+            username: authCheck.username
+        }
+    }
+    else{
+        return {
+            success: false
+        }
+    }
+}
+
 async function logout(){
     localStorage.removeItem(MESSAGES_KEY);
     localStorage.removeItem(USERNAME_KEY);
@@ -141,4 +163,4 @@ class SocketProxy{
 
 const Proxy = new SocketProxy();
 
-export { logout, retrieveData, initialMessageLoad, Proxy }
+export { verifyAuthForLogin, logout, retrieveData, initialMessageLoad, Proxy }
