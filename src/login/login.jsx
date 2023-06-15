@@ -1,6 +1,7 @@
 import React from 'react';
 import './login.css';
 import { verifyAuthForLogin, login, validateCredentials, getQuote } from './login';
+import { NavLink } from 'react-router-dom';
 
 export function Login({transitionScreen, authorized, setAuth}){
     const [quote, setQuote] = React.useState(null);
@@ -50,10 +51,13 @@ export function Login({transitionScreen, authorized, setAuth}){
                     <input type="text"className="inputLocation"id="password"name="passwordText"placeholder="password here"/>
                 </div>
                 <div>
-                    <button type="submit"className="positiveButton"onClick={() => tryLogin()}>Login</button>
+                    <button className="positiveButton"onClick={() => tryLogin()}>Login</button>
                 </div>
                 <div>
-                    <button type="submit"className="alternateButton" onClick={() => transitionScreen("createAccount")}>Create new account</button>
+                    <button className="alternateButton" onClick={() => transitionScreen("createAccount")}>Create new account</button>
+                </div>
+                <div>
+                    <button className="alternateButton" onClick={() => transitionScreen("createAccount")}>Test Button</button>
                 </div>
             </div>
             <div id="loginDecorations">
