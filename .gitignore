@@ -1,4 +1,3 @@
 node_modules/
 service/node_modules/
 ./service/dbConfig.json
-deployService.sh
