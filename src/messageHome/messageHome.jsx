@@ -78,12 +78,20 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
         });
     }
 
+    function performLogout(){
+        logout()
+            .then(()=>{
+                setAuth(false);
+                transitionScreen("login");
+            });
+    }
+
     return (
         <main>
             <div id="headerOptions">
                 <nav id="optionsMenu">
                     <div>
-                        <button type="submit"className="alternateButton menuButton"onClick={() => logout()}id="logoutButton">Logout</button>
+                        <button type="submit"className="alternateButton menuButton"onClick={() => performLogout()}id="logoutButton">Logout</button>
                     </div>
                     <form action="settings.html">
                         <button type="submit"className="alternateButton menuButton"id="settingsButton">Settings</button>
@@ -105,7 +113,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
                     </span>
                     <div id="inputBar">
                         <textarea id="messageBox" className="inputLocation"name="newMessage" rows="1" columns="1"></textarea>
-                        <button id="sendButton" type="submit"onclick="sendMessage()"className="positiveButton">Send</button>
+                        <button id="sendButton" type="submit"className="positiveButton">Send</button>
                     </div>
                 </div>
             </div>
