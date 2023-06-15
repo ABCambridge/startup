@@ -118,7 +118,7 @@ class SocketProxy{
 
     
     updateMessageStorage(newMessage){
-        messages.push(newMessage);
+        this.messages.push(newMessage);//this isn't going to work since it'll only be new ones
         localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
     }
 }
