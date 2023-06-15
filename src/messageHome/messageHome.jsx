@@ -1,14 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './messageHome.css';
-import { logout, retrieveData, initialMessageLoad } from './messageHome.js';
-import { send } from 'vite';
+import { logout, retrieveData, initialMessageLoad } from './messageHome.js'
 const USERNAME_KEY = "FastChat_username";
 
-export function MessageHome({ transitionScreen, setAuth, authorized }){
+export function MessageHome({ transitionScreen, authorized, setAuth }){
     const [user, setUser] = React.useState(window.localStorage.getItem(USERNAME_KEY));
     const [conversations, setConversations] = React.useState([]);
-    const [convoName, setConvoName] = React.useState("Please select a conversation");
+    const [convoName, setConvoName] = React.useState("(not selected)");
     const [messageBank, setMessageBank] = React.useState([]);
 
     const systemMessage = {
@@ -80,34 +78,16 @@ export function MessageHome({ transitionScreen, setAuth, authorized }){
         });
     }
 
-    // function handleNewMessage(message){
-    //         setMessageBank([...messageBank, message]);
-    //     }
-
-    // function sendMessage(){
-    //     // const box = document.querySelector("#messageBox");
-    //     // const input = box.value;
-    //     // Proxy.sendMessage(input,user,convoName);
-    // }
-
-    function performLogout(){
-        logout()
-            .then(()=>{
-                setAuth(false);
-                transitionScreen("login");
-            });
-    }
-
     return (
         <main>
             <div id="headerOptions">
                 <nav id="optionsMenu">
                     <div>
-                        <button type="submit"className="alternateButton menuButton"onClick={() => performLogout()}id="logoutButton">Logout</button>
+                        <button type="submit"className="alternateButton menuButton"onClick={() => logout()}id="logoutButton">Logout</button>
                     </div>
-                    <div>
-                        <button type="submit"className="alternateButton menuButton"onClick={() => transitionScreen("settings")}id="settingsButton">Settings</button>
-                    </div>
+                    <form action="settings.html">
+                        <button type="submit"className="alternateButton menuButton"id="settingsButton">Settings</button>
+                    </form>
                 </nav>
                 <h5 id="currentUser">Logged in as {user}</h5>
             </div>
@@ -125,7 +105,7 @@ export function MessageHome({ transitionScreen, setAuth, authorized }){
                     </span>
                     <div id="inputBar">
                         <textarea id="messageBox" className="inputLocation"name="newMessage" rows="1" columns="1"></textarea>
-                        <button id="sendButton" type="submit"className="positiveButton">Send</button>
+                        <button id="sendButton" type="submit"onclick="sendMessage()"className="positiveButton">Send</button>
                     </div>
                 </div>
             </div>

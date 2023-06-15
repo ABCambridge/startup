@@ -61,10 +61,7 @@ export function Login({transitionScreen, authorized, setAuth}){
                 <div>
                         <p id="quote">{quote}</p>
                         <p><i id="author">{author}</i></p>
-                </div>  
-                <script>
-                    getQuote();
-                </script>
+                </div> 
                 <image id="introImage" src="./FastChat_Logo.png"alt="FastChat Logo"width="300"/>
             </div>
         </main>

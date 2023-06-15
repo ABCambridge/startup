@@ -3,6 +3,8 @@ const MESSAGES_KEY = "FastChat_messages";
 const OUTGOING_MESSAGE = "outgoingMessage";
 const INCOMING_MESSAGE = "incomingMessage";
 
+export { logout, retrieveData, initialMessageLoad }
+
 async function logout(){
     localStorage.removeItem(MESSAGES_KEY);
     localStorage.removeItem(USERNAME_KEY);
@@ -68,66 +70,154 @@ function addMessageTypes(messages){
     }
 }
 
-class MessageProxy{
-    constructor(){
-        const protocol = (window.location.protocol === 'http:' ? 'ws' : 'wss');
-        this.webSocket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+async function verifyAuthForMessages(){
+    const response = await fetch(`/authorize`,{
+        method: 'GET',
+        headers: {'content-type':'application/json'}
+    });
 
-        this.webSocket.onopen = (data) => {
-            webSocket.send(JSON.stringify({
-                "type":"hostUserUpdate",
-                "hostUser":window.localStorage.getItem(USERNAME_KEY)
-            }));
-        };
-        this.webSocket.onclose = (data) => {
-            //TODO: do I actually need to do anything here?
-        };
+    const authCheck = await response.json();
 
-        this.webSocket.onmessage = async (bytes) => {
-            let data = JSON.parse(bytes.data);
-            if(data.type === "message"){
-                let message = JSON.parse(data.message);
-                message.type = INCOMING_MESSAGE;
-                updateMessageStorage(message);
-                loadMessages();
-            }
-        };
+    if(!authCheck.success){
+        alert("Session authentication failed. Please login again.");
+        window.location.href = authCheck.nextLink;
     }
-    
-    sendMessage(value,sender,recipient){
+}
+
+let webSocket;
+
+async function startWebSocket(){
+    const protocol = (window.location.protocol === 'http:' ? 'ws' : 'wss');
+    webSocket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+    webSocket.onopen = (data) => {
+        webSocket.send(JSON.stringify({
+            "type":"hostUserUpdate",
+            "hostUser":window.localStorage.getItem(USERNAME_KEY)
+        }));
+    };
+    webSocket.onclose = (data) => {
+        //TODO: do I actually need to do anything here?
+    };
+
+    webSocket.onmessage = async (bytes) => {
+        let data = JSON.parse(bytes.data);
+        if(data.type === "message"){
+            let message = JSON.parse(data.message);
+            message.type = INCOMING_MESSAGE;
+            updateMessageStorage(message);
+            loadMessages();
+        }
+    };
+}
+
+startWebSocket();
+
+let currentConversation = null;
+
+function loadConversations(){
+    const convoList = document.querySelector("#conversations");
+    conversations.forEach((a) => {
+        let convoItem = document.createElement('span');
+        convoItem.setAttribute('class','conversation');
+        convoItem.setAttribute('onclick','selectConversation(this)');
+        convoItem.textContent = a;
+        convoList.appendChild(convoItem);
+    });
+}
+
+const introMessage = {
+    text:"This is the beginning of your conversation with ",
+    type:"systemMessage"
+};
+
+function updateUserDisplay(){
+    document.querySelector("#currentUser").textContent = "Logged in as " + localStorage.getItem(USERNAME_KEY);
+}
+
+function selectConversation(conversation){
+    currentConversation = conversation;
+    updateConversationHeader();
+    loadMessages();
+}
+
+function updateConversationHeader(){
+    let title;
+    if(currentConversation === null){
+        title = "Please select a conversation";
+    }
+    else{
+        title = "Conversation with " + currentConversation.textContent;
+    }
+
+    document.querySelector("#conversationTitle").textContent = title;
+}
+
+let acceptMessages = false;
+
+function loadMessages(){
+    if(currentConversation !== null){
+        const messageWindow = document.querySelector("#messages");
+        removeChildrenNodes(messageWindow);
+        addStartingMessage(messageWindow);
+
+        let loadedMessages = JSON.parse(localStorage.getItem(MESSAGES_KEY));
+
+        loadedMessages.forEach((message) => {
+            let otherPerson = currentConversation.textContent;
+            if(message.sender === otherPerson || message.recipient === otherPerson){
+                insertMessage(message,messageWindow);    
+            }
+        });
+    }
+
+    acceptMessages = true;
+}
+
+function removeChildrenNodes(parent){
+    while(parent.firstChild){
+        parent.removeChild(parent.firstChild);
+    }
+}
+
+function addStartingMessage(messages){
+    let sysMessage = document.createElement('span');
+    sysMessage.setAttribute('class','message systemMessage');
+    sysMessage.textContent = introMessage.text + currentConversation.textContent + '.';
+    messages.appendChild(sysMessage);
+}
+
+function insertMessage(message,messageWindow){
+    let newMessage = document.createElement('span');
+    newMessage.setAttribute('class',`message ${message.type}`);
+    newMessage.textContent = message.text;
+    messageWindow.appendChild(newMessage);
+    messageWindow.scrollTo(0,messageWindow.scrollHeight);
+}
+
+function sendMessage(){
+    if(acceptMessages && currentConversation !== null){
+        const inputBox = document.querySelector("#messageBox");
         let outgoingMessage = {
-            text: value,
+            text: inputBox.value,
             type: OUTGOING_MESSAGE,
-            sender: sender,
-            recipient: recipient
+            sender: localStorage.getItem(USERNAME_KEY),
+            recipient: currentConversation.textContent
         }
 
         updateMessageStorage(outgoingMessage);
 
-        this.webSocket.send(JSON.stringify({
+        webSocket.send(JSON.stringify({
             "type":"message",
             "message":JSON.stringify(outgoingMessage)
         }));
 
         insertMessage(outgoingMessage,document.querySelector("#messages"));
+        inputBox.value = "";
     }
 }
 
-// function insertMessage(message,messageWindow){
-//     let newMessage = document.createElement('span');
-//     newMessage.setAttribute('class',`message ${message.type}`);
-//     newMessage.textContent = message.text;
-//     messageWindow.appendChild(newMessage);
-//     messageWindow.scrollTo(0,messageWindow.scrollHeight);
-// }
-
-
-
-// async function updateMessageStorage(newMessage){
-//     messages.push(newMessage);
-//     localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
-// }
-
-// const Proxy = new MessageProxy();
-
-export { logout, retrieveData, initialMessageLoad}
+async function updateMessageStorage(newMessage){
+    messages.push(newMessage);
+    localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
+}
