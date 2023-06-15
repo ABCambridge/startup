@@ -69,7 +69,7 @@ function addMessageTypes(messages){
 }
 
 class SocketProxy{
-    messages = JSON.parse(localStorage.getItem(MESSAGES_KEY));
+    messages = JSON.parse(localStorage.getItem(MESSAGES_KEY)) || [];
     started = false;
 
     constructor(){
@@ -101,6 +101,9 @@ class SocketProxy{
     }
 
     sendMessage(value, sender, recipient){
+        if(this.messages === null){
+            this.messages = JSON.parse(localStorage.getItem(MESSAGES_KEY)) || [];
+        }
         if(this.started && recipient !== "(not selected)"){
             let outgoingMessage = {
                 text: value,

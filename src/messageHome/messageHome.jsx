@@ -1,14 +1,16 @@
 import React from 'react';
 import './messageHome.css';
 import { logout, retrieveData, initialMessageLoad, Proxy } from './messageHome.js'
+import { useNavigate } from 'react-router-dom';
 const USERNAME_KEY = "FastChat_username";
 
-export function MessageHome({ transitionScreen, authorized, setAuth }){
+export function MessageHome({ authorized, setAuth }){
     const [user, setUser] = React.useState(window.localStorage.getItem(USERNAME_KEY));
     const [conversations, setConversations] = React.useState([]);
     const [convoName, setConvoName] = React.useState("(not selected)");
     const [messageBank, setMessageBank] = React.useState([]);
     const [boxValue, setBoxValue] = React.useState("");
+    const nav = useNavigate();
 
     const systemMessage = {
         text:"This is the beginning of your conversation with ",
@@ -20,7 +22,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
             logout()
                 .then(()=> {
                     alert("Session authentication failed. Please login again.");
-                    transitionScreen("login");
+                    nav('/');
                 });
         }
     },[authorized]);
@@ -97,7 +99,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
         logout()
             .then(()=>{
                 setAuth(false);
-                transitionScreen("login");
+                nav('/');
             });
     }
 
@@ -119,11 +121,11 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
             <div id="headerOptions">
                 <nav id="optionsMenu">
                     <div>
-                        <button type="submit"className="alternateButton menuButton"onClick={() => performLogout()}id="logoutButton">Logout</button>
+                        <button className="alternateButton menuButton"onClick={() => performLogout()}id="logoutButton">Logout</button>
                     </div>
-                    <form action="settings.html">
-                        <button type="submit"className="alternateButton menuButton"onClick={() => transitionScreen("settings")}id="settingsButton">Settings</button>
-                    </form>
+                    <div>
+                        <button className="alternateButton menuButton"onClick={() => nav('/settings')}id="settingsButton">Settings</button>
+                    </div>
                 </nav>
                 <h5 id="currentUser">Logged in as {user}</h5>
             </div>

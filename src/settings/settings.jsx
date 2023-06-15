@@ -1,16 +1,18 @@
 import React from 'react';
 import '../accountInfo.css';
 import { submitChanges } from './settings';
+import { useNavigate } from 'react-router-dom';
 const USERNAME_KEY = "FastChat_username";
 
-export function Settings({transitionScreen, authorized, setAuth}){
+export function Settings(){
     const userName = localStorage.getItem(USERNAME_KEY);
+    const nav = useNavigate();
 
     function processChanges(){
         submitChanges()
             .then((result) => {
                 if(result.success){
-                    transitionScreen("messageHome");
+                    nav('/messageHome');
                 }
             });
     }
@@ -33,11 +35,11 @@ export function Settings({transitionScreen, authorized, setAuth}){
             </div>
             <div>
                 <div>
-                    <button type="submit"onClick={() => processChanges()}className="positiveButton">Submit changes</button>
+                    <button onClick={() => processChanges()}className="positiveButton">Submit changes</button>
                 </div>
             </div>
             <div>
-                   <button type="submit"className="alternateButton"onClick={() => transitionScreen("messageHome")}>Back to messages</button>
+                   <button className="alternateButton"onClick={() => nav('/messageHome')}>Back to messages</button>
             </div>
         </main>
     );

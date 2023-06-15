@@ -1,15 +1,17 @@
 import React from 'react';
 import '../accountInfo.css';
 import { createAccount } from './createAccount';
+import { useNavigate } from 'react-router-dom';
 
-export function CreateAccount({transitionScreen, authorized, setAuth}){
+export function CreateAccount({ setAuth}){
+    const nav = useNavigate();
 
     function tryCreation(){
         createAccount()
             .then((result) => {
                 if(result.success){
                     setAuth(true);
-                    transitionScreen("messageHome");
+                    nav('/messageHome')
                 }
             });
     }
@@ -36,7 +38,7 @@ export function CreateAccount({transitionScreen, authorized, setAuth}){
                 </div>
             </div>
             <div>
-                <button type="submit"className="alternateButton"onClick={() => transitionScreen("login")}>Back to Login screen</button>
+                <button type="submit"className="alternateButton"onClick={() => nav('/')}>Back to Login</button>
             </div>
         </main>
     );

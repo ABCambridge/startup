@@ -1,18 +1,19 @@
 import React from 'react';
 import './login.css';
 import { verifyAuthForLogin, login, validateCredentials, getQuote } from './login';
-import { NavLink } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
-export function Login({transitionScreen, authorized, setAuth}){
+export function Login({setAuth}){
     const [quote, setQuote] = React.useState(null);
     const [author, setAuthor] = React.useState(null);
+    const nav = useNavigate();
 
     React.useEffect(() => {
         verifyAuthForLogin()
             .then((result) =>{
                 if(result.success){
                     setAuth(true);
-                    transitionScreen("messageHome");
+                    nav('/messageHome');
                 }
             })
     },[]);
@@ -32,11 +33,10 @@ export function Login({transitionScreen, authorized, setAuth}){
             .then((result) => {
                 if(result.success){
                     setAuth(true);
-                    transitionScreen("messageHome");
+                    nav('/messageHome');
                 }
             })
     }
-
     
     return (
         <main className="centeredContent">
@@ -54,10 +54,7 @@ export function Login({transitionScreen, authorized, setAuth}){
                     <button className="positiveButton"onClick={() => tryLogin()}>Login</button>
                 </div>
                 <div>
-                    <button className="alternateButton" onClick={() => transitionScreen("createAccount")}>Create new account</button>
-                </div>
-                <div>
-                    <button className="alternateButton" onClick={() => transitionScreen("createAccount")}>Test Button</button>
+                    <button className="alternateButton" onClick={() => nav('/createAccount')}>Create new account</button>
                 </div>
             </div>
             <div id="loginDecorations">
