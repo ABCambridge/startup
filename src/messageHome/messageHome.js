@@ -70,20 +70,6 @@ function addMessageTypes(messages){
     }
 }
 
-async function verifyAuthForMessages(){
-    const response = await fetch(`/authorize`,{
-        method: 'GET',
-        headers: {'content-type':'application/json'}
-    });
-
-    const authCheck = await response.json();
-
-    if(!authCheck.success){
-        alert("Session authentication failed. Please login again.");
-        window.location.href = authCheck.nextLink;
-    }
-}
-
 let webSocket;
 
 async function startWebSocket(){
@@ -124,21 +110,6 @@ function loadConversations(){
         convoItem.textContent = a;
         convoList.appendChild(convoItem);
     });
-}
-
-const introMessage = {
-    text:"This is the beginning of your conversation with ",
-    type:"systemMessage"
-};
-
-function updateUserDisplay(){
-    document.querySelector("#currentUser").textContent = "Logged in as " + localStorage.getItem(USERNAME_KEY);
-}
-
-function selectConversation(conversation){
-    currentConversation = conversation;
-    updateConversationHeader();
-    loadMessages();
 }
 
 function updateConversationHeader(){
