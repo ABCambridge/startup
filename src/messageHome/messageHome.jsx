@@ -1,6 +1,6 @@
 import React from 'react';
 import './messageHome.css';
-import { logout, retrieveData, initialMessageLoad } from './messageHome.js'
+import { logout, retrieveData, initialMessageLoad, Proxy } from './messageHome.js'
 const USERNAME_KEY = "FastChat_username";
 
 export function MessageHome({ transitionScreen, authorized, setAuth }){

@@ -70,35 +70,36 @@ function addMessageTypes(messages){
 
 class SocketProxy{
     constructor(){
-
+        const protocol = (window.location.protocol === 'http:' ? 'ws' : 'wss');
+        this.webSocket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+        this.webSocket.onopen = (data) => {
+            webSocket.send(JSON.stringify({
+                "type":"hostUserUpdate",
+                "hostUser":window.localStorage.getItem(USERNAME_KEY)
+            }));
+        };
+        this.webSocket.onclose = (data) => {
+            //TODO: do I actually need to do anything here?
+        };
+    
+        this.webSocket.onmessage = async (bytes) => {
+            let data = JSON.parse(bytes.data);
+            if(data.type === "message"){
+                let message = JSON.parse(data.message);
+                message.type = INCOMING_MESSAGE;
+                updateMessageStorage(message);
+                loadMessages();
+            }
+        };
     }
 }
 
 let webSocket;
 
 async function startWebSocket(){
-    const protocol = (window.location.protocol === 'http:' ? 'ws' : 'wss');
-    webSocket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+    
 
-    webSocket.onopen = (data) => {
-        webSocket.send(JSON.stringify({
-            "type":"hostUserUpdate",
-            "hostUser":window.localStorage.getItem(USERNAME_KEY)
-        }));
-    };
-    webSocket.onclose = (data) => {
-        //TODO: do I actually need to do anything here?
-    };
-
-    webSocket.onmessage = async (bytes) => {
-        let data = JSON.parse(bytes.data);
-        if(data.type === "message"){
-            let message = JSON.parse(data.message);
-            message.type = INCOMING_MESSAGE;
-            updateMessageStorage(message);
-            loadMessages();
-        }
-    };
+    
 }
 
 startWebSocket();
