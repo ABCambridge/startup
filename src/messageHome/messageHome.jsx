@@ -68,7 +68,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
     const currentMessages = [];
     if(convoName !== "(not selected)"){
         currentMessages.push(
-            <span class={"message " + systemMessage.type}>
+            <span className={"message " + systemMessage.type}>
                 {systemMessage.text + convoName}
             </span>
         );

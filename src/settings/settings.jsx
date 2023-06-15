@@ -20,15 +20,15 @@ export function Settings({transitionScreen, authorized, setAuth}){
         <script src="settings.js"></script>
             <h3>FastChat Settings</h3>
             <div>
-                <label for="username">Username: </label>
+                <label htmlFor="username">Username: </label>
                 <input type="text"className="inputLocation"id="username"name="usernameText"placeholder={userName}/>
             </div>
             <div>
-                <label for="password">Password: </label>
+                <label htmlFor="password">Password: </label>
                 <input type="text"className="inputLocation"id="password"name="passwordText"placeholder="new password"/>
             </div>
             <div>
-                <label for="confirmPassword">Confirm Password: </label>
+                <label htmlFor="confirmPassword">Confirm Password: </label>
                 <input type="text"className="inputLocation"id="confirmPassword"name="confirmPasswordText"placeholder="confirm new password"/>
             </div>
             <div>

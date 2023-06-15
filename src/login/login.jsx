@@ -43,11 +43,11 @@ export function Login({transitionScreen, authorized, setAuth}){
             <div id="loginInformation">
                 <h3>Login to FastChat </h3>
                 <div>
-                    <label for="username">Username: </label>
+                    <label htmlFor="username">Username: </label>
                     <input type="text"className="inputLocation"id="username"name="usernameText"placeholder="username here"/>
                 </div>
                 <div>
-                    <label for="password">Password: </label>
+                    <label htmlFor="password">Password: </label>
                     <input type="text"className="inputLocation"id="password"name="passwordText"placeholder="password here"/>
                 </div>
                 <div>
@@ -62,7 +62,7 @@ export function Login({transitionScreen, authorized, setAuth}){
                         <p id="quote">{quote}</p>
                         <p><i id="author">{author}</i></p>
                 </div> 
-                <image id="introImage" src="./FastChat_Logo.png"alt="FastChat Logo"width="300"/>
+                <img id="introImage" src="./FastChat_Logo.png"alt="FastChat Logo"width="300"/>
             </div>
         </main>
     );
