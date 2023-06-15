@@ -82,7 +82,7 @@ class SocketProxy{
             }));
         };
         this.webSocket.onclose = (data) => {
-            //TODO: do I actually need to do anything here?
+            //intentionally blank
         };
     }
 

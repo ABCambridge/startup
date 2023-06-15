@@ -49,11 +49,16 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
             });
     },[]);
 
+    React.useEffect(() => {
+        let messageWindow = document.querySelector("#messages");
+        messageWindow.scrollTo(0,messageWindow.scrollHeight);
+    },[convoName,messageBank]);
+
     const convoEntries = [];
     if(conversations.length){
         conversations.forEach((convo) => {
             convoEntries.push(
-                <span class="conversation" onClick={() => setConvoName(convo)}>
+                <span className="conversation" onClick={() => setConvoName(convo)}>
                     {convo}
                 </span>
             );
@@ -73,7 +78,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
 
             if(message.sender === convoName || message.recipient === convoName){
                 currentMessages.push(
-                    <span class={"message " + message.type}>
+                    <span className={"message " + message.type}>
                         {message.text}
                     </span> 
                 );   
