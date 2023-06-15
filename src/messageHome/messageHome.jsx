@@ -81,6 +81,13 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
         });
     }
 
+    function handleIncomingMessage(message){
+        console.log(message);
+        setMessageBank([...messageBank,message]);
+    }
+
+    Proxy.start(handleIncomingMessage);
+
     function performLogout(){
         logout()
             .then(()=>{
@@ -92,7 +99,14 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
     function sendMessage(){
         const box = document.querySelector("#messageBox");
         const input = box.value;
-        setBoxValue("");
+        let result = Proxy.sendMessage(input,user,convoName);
+        if(result.success){
+            handleIncomingMessage(result.message);
+            setBoxValue("");
+        }
+        else{
+            alert("Message failed to send");
+        }
     }
 
     return (

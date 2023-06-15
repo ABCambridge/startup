@@ -69,13 +69,14 @@ function addMessageTypes(messages){
 }
 
 class SocketProxy{
-    messages = [];
+    messages = JSON.parse(localStorage.getItem(MESSAGES_KEY));
+    started = false;
 
     constructor(){
         const protocol = (window.location.protocol === 'http:' ? 'ws' : 'wss');
         this.webSocket = new WebSocket(`${protocol}://${window.location.host}/ws`);
         this.webSocket.onopen = (data) => {
-            webSocket.send(JSON.stringify({
+            this.webSocket.send(JSON.stringify({
                 "type":"hostUserUpdate",
                 "hostUser":window.localStorage.getItem(USERNAME_KEY)
             }));
@@ -83,20 +84,24 @@ class SocketProxy{
         this.webSocket.onclose = (data) => {
             //TODO: do I actually need to do anything here?
         };
-    
+    }
+
+    start(updatingFunction){
         this.webSocket.onmessage = async (bytes) => {
             let data = JSON.parse(bytes.data);
             if(data.type === "message"){
                 let message = JSON.parse(data.message);
                 message.type = INCOMING_MESSAGE;
-                updateMessageStorage(message);
-                loadMessages();
+                this.updateMessageStorage(message);
+                updatingFunction(message);
             }
         };
+
+        this.started = true;
     }
 
     sendMessage(value, sender, recipient){
-        if(recipient !== "(not selected)"){
+        if(this.started && recipient !== "(not selected)"){
             let outgoingMessage = {
                 text: value,
                 type: OUTGOING_MESSAGE,
@@ -104,59 +109,31 @@ class SocketProxy{
                 recipient: recipient
             }
     
-            updateMessageStorage(outgoingMessage);
+            this.updateMessageStorage(outgoingMessage);
     
-            webSocket.send(JSON.stringify({
+            this.webSocket.send(JSON.stringify({
                 "type":"message",
                 "message":JSON.stringify(outgoingMessage)
             }));
-    
-            insertMessage(outgoingMessage,document.querySelector("#messages"));
-            inputBox.value = "";
+
+            console.log(outgoingMessage);
+
+            return{
+                success:true,
+                message:outgoingMessage
+            };
+        }
+        else{
+            return {
+                success:false
+            };
         }
     }
-
     
     updateMessageStorage(newMessage){
-        this.messages.push(newMessage);//this isn't going to work since it'll only be new ones
-        localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
+        this.messages.push(newMessage);
+        localStorage.setItem(MESSAGES_KEY,JSON.stringify(this.messages));
     }
-}
-
-function loadMessages(){
-    if(currentConversation !== null){
-        const messageWindow = document.querySelector("#messages");
-        removeChildrenNodes(messageWindow);
-        addStartingMessage(messageWindow);
-
-        let loadedMessages = JSON.parse(localStorage.getItem(MESSAGES_KEY));
-
-        loadedMessages.forEach((message) => {
-            let otherPerson = currentConversation.textContent;
-            if(message.sender === otherPerson || message.recipient === otherPerson){
-                insertMessage(message,messageWindow);    
-            }
-        });
-    }
-
-    acceptMessages = true;
-}
-
-function removeChildrenNodes(parent){
-    while(parent.firstChild){
-        parent.removeChild(parent.firstChild);
-    }
-}
-
-function addStartingMessage(messages){
-}
-
-function insertMessage(message,messageWindow){
-    let newMessage = document.createElement('span');
-    newMessage.setAttribute('class',`message ${message.type}`);
-    newMessage.textContent = message.text;
-    messageWindow.appendChild(newMessage);
-    messageWindow.scrollTo(0,messageWindow.scrollHeight);
 }
 
 const Proxy = new SocketProxy();
