@@ -3,8 +3,6 @@ const MESSAGES_KEY = "FastChat_messages";
 const OUTGOING_MESSAGE = "outgoingMessage";
 const INCOMING_MESSAGE = "incomingMessage";
 
-export { logout, retrieveData, initialMessageLoad }
-
 async function logout(){
     localStorage.removeItem(MESSAGES_KEY);
     localStorage.removeItem(USERNAME_KEY);
@@ -67,6 +65,12 @@ function addMessageTypes(messages){
                 m.type = INCOMING_MESSAGE;
             }
         });
+    }
+}
+
+class SocketProxy{
+    constructor(){
+
     }
 }
 
@@ -180,3 +184,8 @@ async function updateMessageStorage(newMessage){
     messages.push(newMessage);
     localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
 }
+
+
+const Proxy = new SocketProxy();
+
+export { logout, retrieveData, initialMessageLoad, Proxy }
