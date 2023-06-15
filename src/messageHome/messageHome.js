@@ -112,18 +112,6 @@ function loadConversations(){
     });
 }
 
-function updateConversationHeader(){
-    let title;
-    if(currentConversation === null){
-        title = "Please select a conversation";
-    }
-    else{
-        title = "Conversation with " + currentConversation.textContent;
-    }
-
-    document.querySelector("#conversationTitle").textContent = title;
-}
-
 let acceptMessages = false;
 
 function loadMessages(){

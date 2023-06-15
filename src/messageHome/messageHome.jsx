@@ -86,6 +86,11 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
             });
     }
 
+    function sendMessage(){
+        const box = document.querySelector("#messageBox");
+        const input = box.value;
+    }
+
     return (
         <main>
             <div id="headerOptions">
@@ -113,7 +118,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
                     </span>
                     <div id="inputBar">
                         <textarea id="messageBox" className="inputLocation"name="newMessage" rows="1" columns="1"></textarea>
-                        <button id="sendButton" type="submit"className="positiveButton">Send</button>
+                        <button id="sendButton" type="submit"onClick={() => sendMessage()}className="positiveButton">Send</button>
                     </div>
                 </div>
             </div>
