@@ -1,14 +1,27 @@
 import React from 'react';
 import '../accountInfo.css';
+import { submitChanges } from './settings';
+const USERNAME_KEY = "FastChat_username";
 
 export function Settings({transitionScreen, authorized, setAuth}){
+    const userName = localStorage.getItem(USERNAME_KEY);
+
+    function processChanges(){
+        submitChanges()
+            .then((result) => {
+                if(result.success){
+                    transitionScreen("messageHome");
+                }
+            });
+    }
+
     return (
         <main className="centeredContent">
         <script src="settings.js"></script>
             <h3>FastChat Settings</h3>
             <div>
                 <label for="username">Username: </label>
-                <input type="text"className="inputLocation"id="username"name="usernameText"placeholder="new username"/>
+                <input type="text"className="inputLocation"id="username"name="usernameText"placeholder={userName}/>
             </div>
             <div>
                 <label for="password">Password: </label>
@@ -20,7 +33,7 @@ export function Settings({transitionScreen, authorized, setAuth}){
             </div>
             <div>
                 <div>
-                    <button type="submit"onclick="submitChanges()"className="positiveButton">Submit changes to settings</button>
+                    <button type="submit"onClick={() => processChanges()}className="positiveButton">Submit changes</button>
                 </div>
             </div>
             <div>

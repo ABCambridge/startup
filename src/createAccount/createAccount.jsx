@@ -1,7 +1,19 @@
 import React from 'react';
 import '../accountInfo.css';
+import { createAccount } from './createAccount';
 
 export function CreateAccount({transitionScreen, authorized, setAuth}){
+
+    function tryCreation(){
+        createAccount()
+            .then((result) => {
+                if(result.success){
+                    setAuth(true);
+                    transitionScreen("messageHome");
+                }
+            });
+    }
+
     return (
         <main className="centeredContent">
             <script src="createAccount.js"></script>
@@ -20,7 +32,7 @@ export function CreateAccount({transitionScreen, authorized, setAuth}){
             </div>
             <div>
                 <div>
-                    <button type="submit"onclick="createAccount()"className="positiveButton">Create New Account</button>
+                    <button type="submit"onClick={() => tryCreation()}className="positiveButton">Create New Account</button>
                 </div>
             </div>
             <div>

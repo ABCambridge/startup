@@ -1,5 +1,7 @@
 const USERNAME_KEY = "FastChat_username";
 
+export {submitChanges}
+
 async function submitChanges(){
     let newUsername = document.getElementById("username").value;
     let newPassword = document.getElementById("password").value;
@@ -18,7 +20,7 @@ async function submitChanges(){
             "newPassword":newPassword
         }
 
-        const response = await fetch("/user",{
+        const response = await fetch("/api/user",{
             method: 'PUT',
             headers: {'content-type':'application/json'},
             body:JSON.stringify(updatedUser)
@@ -28,22 +30,15 @@ async function submitChanges(){
 
         if(result.success){
             localStorage.setItem(USERNAME_KEY,result.username);
-            window.location.href = result.nextLink;
+            return{
+                success:true
+            };
         }
         else{
             alert(result.message);
+            return{
+                success:false
+            };
         }
     }
-}
-
-async function fillFields(){
-    const response = await fetch(`/authorize`);
-    const result = await response.json();
-
-    if(!result.success){
-        alert("Authentication session failed.")
-        window.location.href = result.nextLink;
-    }
-
-    document.getElementById("username").value = localStorage.getItem(USERNAME_KEY);
 }

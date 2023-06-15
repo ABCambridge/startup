@@ -1,4 +1,7 @@
 const USERNAME_KEY = "FastChat_username";
+
+export {createAccount}
+
 async function createAccount(){
     let newUsername = document.getElementById("username").value;
     let newPassword = document.getElementById("password").value;
@@ -15,7 +18,7 @@ async function createAccount(){
             "newPassword":newPassword
         }
 
-        const response = await fetch('/user',{
+        const response = await fetch('/api/user',{
             method: 'POST',
             headers: {'content-type':'application/json'},
             body:JSON.stringify(newUser)
@@ -25,10 +28,15 @@ async function createAccount(){
 
         if(result.success){
             localStorage.setItem(USERNAME_KEY,result.username);
-            window.location.href = result.nextLink;
+            return{
+                success:true,
+            };
         }
         else{
             alert(result.message);
+            return{
+                success:false
+            };
         }
     }
 }
