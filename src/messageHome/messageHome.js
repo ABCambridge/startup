@@ -69,6 +69,8 @@ function addMessageTypes(messages){
 }
 
 class SocketProxy{
+    messages = [];
+
     constructor(){
         const protocol = (window.location.protocol === 'http:' ? 'ws' : 'wss');
         this.webSocket = new WebSocket(`${protocol}://${window.location.host}/ws`);
@@ -92,32 +94,34 @@ class SocketProxy{
             }
         };
     }
-}
 
-let webSocket;
-
-async function startWebSocket(){
+    sendMessage(value, sender, recipient){
+        if(recipient !== "(not selected)"){
+            let outgoingMessage = {
+                text: value,
+                type: OUTGOING_MESSAGE,
+                sender: sender,
+                recipient: recipient
+            }
     
+            updateMessageStorage(outgoingMessage);
+    
+            webSocket.send(JSON.stringify({
+                "type":"message",
+                "message":JSON.stringify(outgoingMessage)
+            }));
+    
+            insertMessage(outgoingMessage,document.querySelector("#messages"));
+            inputBox.value = "";
+        }
+    }
 
     
+    updateMessageStorage(newMessage){
+        messages.push(newMessage);
+        localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
+    }
 }
-
-startWebSocket();
-
-let currentConversation = null;
-
-function loadConversations(){
-    const convoList = document.querySelector("#conversations");
-    conversations.forEach((a) => {
-        let convoItem = document.createElement('span');
-        convoItem.setAttribute('class','conversation');
-        convoItem.setAttribute('onclick','selectConversation(this)');
-        convoItem.textContent = a;
-        convoList.appendChild(convoItem);
-    });
-}
-
-let acceptMessages = false;
 
 function loadMessages(){
     if(currentConversation !== null){
@@ -145,10 +149,6 @@ function removeChildrenNodes(parent){
 }
 
 function addStartingMessage(messages){
-    let sysMessage = document.createElement('span');
-    sysMessage.setAttribute('class','message systemMessage');
-    sysMessage.textContent = introMessage.text + currentConversation.textContent + '.';
-    messages.appendChild(sysMessage);
 }
 
 function insertMessage(message,messageWindow){
@@ -158,34 +158,6 @@ function insertMessage(message,messageWindow){
     messageWindow.appendChild(newMessage);
     messageWindow.scrollTo(0,messageWindow.scrollHeight);
 }
-
-function sendMessage(){
-    if(acceptMessages && currentConversation !== null){
-        const inputBox = document.querySelector("#messageBox");
-        let outgoingMessage = {
-            text: inputBox.value,
-            type: OUTGOING_MESSAGE,
-            sender: localStorage.getItem(USERNAME_KEY),
-            recipient: currentConversation.textContent
-        }
-
-        updateMessageStorage(outgoingMessage);
-
-        webSocket.send(JSON.stringify({
-            "type":"message",
-            "message":JSON.stringify(outgoingMessage)
-        }));
-
-        insertMessage(outgoingMessage,document.querySelector("#messages"));
-        inputBox.value = "";
-    }
-}
-
-async function updateMessageStorage(newMessage){
-    messages.push(newMessage);
-    localStorage.setItem(MESSAGES_KEY,JSON.stringify(messages));
-}
-
 
 const Proxy = new SocketProxy();
 

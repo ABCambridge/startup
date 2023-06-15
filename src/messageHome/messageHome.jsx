@@ -61,11 +61,13 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
     }
 
     const currentMessages = [];
-    currentMessages.push(
-        <span class={"message " + systemMessage.type}>
-            {systemMessage.text + convoName}
-        </span>
-    );
+    if(convoName !== "(not selected)"){
+        currentMessages.push(
+            <span class={"message " + systemMessage.type}>
+                {systemMessage.text + convoName}
+            </span>
+        );
+    }
     if(messageBank.length){
         messageBank.forEach((message) => {
 
