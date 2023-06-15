@@ -8,6 +8,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
     const [conversations, setConversations] = React.useState([]);
     const [convoName, setConvoName] = React.useState("(not selected)");
     const [messageBank, setMessageBank] = React.useState([]);
+    const [boxValue, setBoxValue] = React.useState("");
 
     const systemMessage = {
         text:"This is the beginning of your conversation with ",
@@ -89,6 +90,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
     function sendMessage(){
         const box = document.querySelector("#messageBox");
         const input = box.value;
+        setBoxValue("");
     }
 
     return (
@@ -117,7 +119,7 @@ export function MessageHome({ transitionScreen, authorized, setAuth }){
                         {currentMessages}
                     </span>
                     <div id="inputBar">
-                        <textarea id="messageBox" className="inputLocation"name="newMessage" rows="1" columns="1"></textarea>
+                        <textarea id="messageBox" className="inputLocation"value={boxValue}onChange={() => setBoxValue()}name="newMessage" rows="1" columns="1">{boxValue}</textarea>
                         <button id="sendButton" type="submit"onClick={() => sendMessage()}className="positiveButton">Send</button>
                     </div>
                 </div>
