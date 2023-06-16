@@ -78,3 +78,10 @@ For this deliverable, I added the following functionality:
 * Frontend makes WebSocket connection: done! Client immediately opens a WebSocket connection with the server when the messaging page is loaded, and then sends and receives messages.
 * Data sent over WebSocket connection: done! After a connection is open, the client sends the server some info identifying its user. Messages are both sent and received over the WebSocket.
 * WebSocket dat displayed in the application interface: done! When the client receives a WebSocket message containing a new message, it processes it and displays the data's contents as a new message (assuming the message is for the chat they have open).
+
+## React Deliverable
+For this deliverable, I added the following functionality:
+* Bundled using Vite: yes! I used Vite to develop my code and bundle it for production.
+* Multiple functional react components: yes! Each of the 4 pages is now represented by a react component within the App component.
+* React router: yes! My pages are wrapped in a BrowserRouter so that I could use the Route functionality. Rather than accessing the routes through NavLinks (due to the structure of my site), I used the useNavigate property to dynamically route to a different component. This took some research, but works well.
+* React hooks: yes! My react components use useState, useEffect, and useNavigate hooks throughout the application.
